@@ -6,8 +6,8 @@ de:
       update:
         success: "Demonstration wurde erfolgreich ge&auml;ndert."
       add_comment:
-        success: "Kommentar wurde gespeichert"
-      delete_comment_success: "Kommentar wurde entfernt"
+        success: "Ergänzung wurde gespeichert"
+      delete_comment_success: "Ergänzung wurde entfernt"
     fields:
       title: "Benötigte Angaben"
       name:
@@ -116,19 +116,19 @@ de:
           title: "Weitere Informationen"
       comments:
         add:
-          title: "Neuen Kommentar eingeben"
+          title: "Neue Ergänzung eingeben"
           hint: "Hier können Sie einen Kommentar oder weitere Hinweise zu dieser Veranstaltung eingeben. Dabei wird Ihr Name den anderen Benutzern <u>nicht</u> angezeigt!"
         list:
-          title: "Kommentare"
+          title: "Ergänzungen"
         field:
           title: "Titel"
-          comment: "Kommentar"
+          comment: "Ergänzung"
         context:
           delete: "Löschen"
         confirm:
-          delete: "Wollen Sie diesen Kommentar wirklich löschen?"
+          delete: "Wollen Sie diese Ergänzung wirklich löschen?"
       button:
-        add_comment: "Kommentar senden"
+        add_comment: "Ergänzung senden"
       card:
         hide: "Karte ausblenden"
       openlayers_maps:

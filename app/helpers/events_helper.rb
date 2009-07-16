@@ -68,6 +68,5 @@ module EventsHelper
     end
     result
   end
-
-
+  
 end

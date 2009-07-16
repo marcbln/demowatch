@@ -16,7 +16,7 @@ module ApplicationHelper
   def google_maps_key
     if request.host.match( /^www\.demowatch\.de/i)
       "ABQIAAAAbmKt_bX8rXoUBM2tWSorIRTnBMjsH0Y2aRb-_04glZphNt2GURSXRZg8NE723uvkLLIsOlfTgHhmzA"
-    elsif request.host.match( /^www\.demowatch\.eu/i)
+    else
       "ABQIAAAAbmKt_bX8rXoUBM2tWSorIRRIprxYrvhzIftfk2H1NRSL0ylmFBQNgArCNLV3vVHVwuG4YfMtNHBR8Q"
     end
   end

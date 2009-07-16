@@ -42,7 +42,10 @@
       %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
         %td.center
           %nobr= startdate_thisyear(event)
-        %td= link_to h( event.title), event
+        %td
+          = link_to h( event.title), event
+          - if event.comments.size > 0
+            = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
         %td= h( event.address)
         -if @with_distance       
           - if !event.distance.nil?

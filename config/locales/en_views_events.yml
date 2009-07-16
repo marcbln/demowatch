@@ -26,7 +26,7 @@ en:
         field:
           description: "Description"
           link: "Website (or e-mail address)"
-          initiator: "Promoter"
+          initiator: "Promoters"
       hint:
         title: "Notice"
         text: "We want to offer our visitors always as accurate and reliable information of demonstrations taking place. <u>All unconstitutional or illegal content will be deleted</u> by us immediately, and its author, if applicable, will be locked <i>Demowatch.de</i>!"
@@ -110,7 +110,7 @@ en:
       description:
         title: "Description"
         initiator:
-          title: "Promoter"
+          title: "Promoters"
           text: "This demonstration was submitted by"
         info:
           title: "Additional Information"

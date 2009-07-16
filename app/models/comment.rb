@@ -2,6 +2,8 @@ class Comment < ActiveRecord::Base
 
   include ActsAsCommentable::Comment
 
+  acts_as_paranoid
+
   belongs_to :commentable, :polymorphic => true
 
   validates_presence_of  :title

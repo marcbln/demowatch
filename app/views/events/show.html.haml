@@ -72,6 +72,7 @@
 
 - comments = @event.comments.recent.all
 - if !comments.empty? 
+  %a{:name=>'comments'}
   %h2= t(".comments.list.title")
 - comments.each_with_index do |comment, index|
   %a{ :name=>comment.id }

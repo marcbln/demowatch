@@ -104,10 +104,10 @@ en:
         all: "All known topics"
         events: "Topics of all demonstrations"
         other: "Topics of all promoters"
-        current: "Topics of recent demonstrations"
+        current: "Topics of current demonstrations"
         powerless: "Topics no one is demonstrating"
       contextmenu:
-        current_only: "Recent"
+        current_only: "Current"
         demo_only: "Demonstration topics"
         all_themes: "All"
         powerless_only: "Without promoter"
@@ -146,7 +146,7 @@ en:
         table: 
           title: "The following organisations supporting this topic:"
           head:
-            initiator: "Promoters"
+            initiator: "Promoter"
             themes: "Topics"
       related:
         title: "Related topics"

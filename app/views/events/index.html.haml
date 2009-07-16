@@ -15,7 +15,7 @@
   = link_to t(".contextmenu.map"), "http://maps.google.de/maps?f=q&source=s_q&hl=de&geocode=&q=http://www.demowatch.de/events.rss&g=%2B52%C2%B0+28'+58.22&ie=UTF8&z=7", { :target=>'_new', :confirm => cookies[:maps]?nil:t(".confirm.maps") }
   .rss= link_to image_tag('rss.gif'), :format => 'rss'
   .ical= link_to image_tag('ical.gif'), :format => 'ical'
-  .twitter= link_to image_tag('twitter.gif'), "http://twitter.com/demowatchderss"
+  .twitter= link_to image_tag('twitter.gif'), "http://twitter.com/demowatch"
     
 %br
 .tabletitle
@@ -38,12 +38,15 @@
     - if index == 0 || event.startdate.to_date.month != @events[index-1].startdate.to_date.month
       %tr
         %td{:class=> index==0 ? "separator_first" : "separator", :colspan=>@with_distance?4:3}
-          %a{:name => l(event.startdate.to_date,:format=>"%m-%Y") }
-          = l(event.startdate.to_date,:format=>"%B %Y") 
+          %a{:name => l(event.startdate.to_date,:format=>"%B" + ((event.startdate.to_date.year != Time.now.year) ? " %Y" : "")) }
+          = l(event.startdate.to_date,:format=>"%B" + ((event.startdate.to_date.year != Time.now.year) ? " %Y" : ""))
     %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
       %td.center
         %nobr= startdate_thisyear(event)
-      %td= link_to h( event.title), event
+      %td
+        = link_to h( event.title), event
+        - if event.comments.size > 0
+          = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
       %td= h( event.city)
       -if @with_distance       
         - if !event.distance.nil?
