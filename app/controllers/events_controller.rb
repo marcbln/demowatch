@@ -83,6 +83,15 @@ class EventsController < ApplicationController
         @map.control_init(:small => true)
         @map.marker_init(Marker.new([@event.latitude, @event.longitude]))
       end
+#@map.polyline_init( 
+#  Polyline.new(
+#    [
+#      LatLonPoint.new([@event.latitude, @event.longitude]), 
+#      LatLonPoint.new([@event.latitude, @event.longitude+0.02])
+#    ]
+#  )
+#)
+      
     end
   end
 

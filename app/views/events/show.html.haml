@@ -4,10 +4,10 @@
     = Mapstraction.header(:google, :host=>request.host)
     = @map.to_html
   - if cookies[:yahoo_maps]
-    = Mapstraction.header(:yahoo, :host=>request.host)
+    = Mapstraction.header(:yahoo)
     = @map.to_html
   - if cookies[:openlayers_maps]
-    = Mapstraction.header(:openlayers, :host=>request.host)
+    = Mapstraction.header(:openlayers)
     = @map.to_html
 
 
