@@ -98,7 +98,8 @@ class EventsController < ApplicationController
   def new
     @event = Event.new(:startdate => Time.now)
     @organisations = Organisation.find(:all, :order => 'title')
-    
+# two letter codes
+@languages = %w{de en es fr}    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @event }
@@ -108,7 +109,6 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
-        
 # two letter codes
 @languages = %w{de en es fr}
   end
@@ -125,10 +125,8 @@ class EventsController < ApplicationController
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         @organisations = Organisation.find(:all, :order => 'title')
-        
 # two letter codes
-@languages = %w{de en es fr}
-
+@languages = %w{de en es fr}          
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end

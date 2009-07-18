@@ -483,6 +483,8 @@ hr  {
 	width:44px; 
 	background:url(/images/language_tabs_tab_active.png); 
 	background-repeat:no-repeat;
+	padding-left:6px;
+	padding-top:6px;
 }
 .tabbed_languages .tabs .tab_inactive {
 	float:left; 
@@ -490,6 +492,8 @@ hr  {
 	height:32px;
 	background:url(/images/language_tabs_tab_inactive.png); 
 	background-repeat:no-repeat;
+	padding-left:6px;
+	padding-top:6px;
 }
 .tabbed_languages .content {
 	padding:0 0 0 0;

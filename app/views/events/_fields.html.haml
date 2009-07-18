@@ -22,14 +22,14 @@
 %div{:class => 'tabbed_languages'}
   %div{:class=> 'tabs'}
     %div{:style => 'float:left; margin-right:16px;'}
-      Sprache:
+      Sprache wählen:
     - @languages.each do |lang|
       - if lang=='de'
         %div{:class=>'tab_active'}
-          %img{ :src=> '/images/' + lang + '.png', :alt=>lang, :style=>'padding:0;height:20px;'}
+          %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang}
       - else
         %div{:class=>'tab_inactive'}
-          %img{ :src=> '/images/' + lang + '.png', :alt=>lang, :style=>'padding:0;height:20px;'}
+          %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang}
           
   %div{ :class=>'content' }
 
