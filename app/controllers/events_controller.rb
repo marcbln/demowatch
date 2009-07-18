@@ -57,10 +57,8 @@ class EventsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @event }
       format.ics  { render :inline => ical([@event]) }
-    
-# verschiedene zoomintervale:
-#   openlayers        0 .. 17
-#   yahoo
+
+      
 # (opt.) parameter fuer marker_init:
 #        :info_bubble => render_to_string(:partial => 'bubble')
 #        :label => ''CGI.escapeHTML( @event.title), 
@@ -110,6 +108,9 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
+        
+# two letter codes
+@languages = %w{de en es fr}
   end
 
   # POST /events
@@ -124,6 +125,10 @@ class EventsController < ApplicationController
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         @organisations = Organisation.find(:all, :order => 'title')
+        
+# two letter codes
+@languages = %w{de en es fr}
+
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end

@@ -125,7 +125,7 @@ small {
 	padding: 1px 31px 28px 31px;
 	background: white;
 	min-height: 40px;
-	line-height: 1.4em;
+/**	das zerhaut das tabbed-language menu... line-height: 1.4em; **/
 }
 
 .balloon .bottom {
@@ -460,4 +460,38 @@ hr  {
 
 .translation_missing {
 	border-bottom:1px solid red;
+}
+
+/** 
+* demo-edit: language-tabs 
+*/
+.tabbed_languages {
+	background:url(/images/language_tabs_bg.png); 
+	background-repeat:no-repeat;
+	margin:0;
+	padding:0;
+	background-position:0 31px;
+}
+.tabbed_languages .tabs {
+	padding:0; 
+	margin:0;
+	height:32px;
+}
+.tabbed_languages .tabs .tab_active {
+	float:left;
+	height:32px;
+	width:44px; 
+	background:url(/images/language_tabs_tab_active.png); 
+	background-repeat:no-repeat;
+}
+.tabbed_languages .tabs .tab_inactive {
+	float:left; 
+	width:44px;
+	height:32px;
+	background:url(/images/language_tabs_tab_inactive.png); 
+	background-repeat:no-repeat;
+}
+.tabbed_languages .content {
+	padding:0 0 0 0;
+	margin:0;
 }

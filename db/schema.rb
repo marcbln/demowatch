@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(:version => 20090714094957) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "demowatch_bak", :force => true do |t|
+    t.string "zip",       :limit => 5
+    t.string "name"
+    t.float  "latitude"
+    t.float  "longitude"
+  end
+
+  add_index "demowatch_bak", ["zip"], :name => "index_zips_on_zip", :unique => true
+
   create_table "events", :force => true do |t|
     t.integer  "organisation_id",      :null => false
     t.text     "title"

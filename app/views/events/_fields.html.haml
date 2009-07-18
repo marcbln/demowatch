@@ -5,60 +5,67 @@
   = f.error_messages
 
 
-%h2= t(".title")
-%p
-  = f.label :title, t(".name.field.title")
-  = f.text_field :title, :size=>60
+%h2= t(".meeting_place")
 
 %p
-  = f.label :tag_list, t(".name.field.themes")
-  = f.text_field :tag_list, :size=>60, :autocomplete => "off"
-  #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
-%p= t(".name.theme_hint")
-
-%h3= t(".venue.title")
-%div{:id => 'addressContainer'}
-  %p
-    %a{:name => 'addressAnchor'}
-    = f.label :address, t(".venue.field.address")
-    = f.text_field :address, :size=>60
-    %span{:id => 'addressDialogue', :style => 'display:none'} 
-
-%p
-  = f.label :location, t(".venue.field.location")
-  = f.text_field :location, :size=>60
+  %a{:name => 'addressAnchor'}
+  = f.label :address, t(".venue.field.address")
+  = f.text_field :address, :size=>60
+  %span{:id => 'addressDialogue', :style => 'display:none'} 
 
 %p
   = f.label :startdate, t(".venue.field.startdate")
   = datetime_select :event, :startdate 
 
-/
-  = f.text_field :startdate, :size=>20
-  #startcal.scal.tinyscal.googleblue
-  #scalupdate &nbsp;
-  
-  :javascript
-    var startcal = new scal('startcal', 'event_startdate', {weekdaystart: 1, updateformat:'dd.mm.yyyy'});
+%h2= t(".title")
 
-%h3= t(".information.title")
-%p
-  = f.label :description, t(".information.field.description")
-  = f.text_area :description, :cols=>60
+%div{:class => 'tabbed_languages'}
+  %div{:class=> 'tabs'}
+    %div{:style => 'float:left; margin-right:16px;'}
+      Sprache:
+    - @languages.each do |lang|
+      - if lang=='de'
+        %div{:class=>'tab_active'}
+          %img{ :src=> '/images/' + lang + '.png', :alt=>lang, :style=>'padding:0;height:20px;'}
+      - else
+        %div{:class=>'tab_inactive'}
+          %img{ :src=> '/images/' + lang + '.png', :alt=>lang, :style=>'padding:0;height:20px;'}
+          
+  %div{ :class=>'content' }
 
--# TINYMCE
-:javascript
-  tinyMCE.init({
-  mode : "textareas",
-  theme : "advanced",
-  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
-  theme_advanced_buttons2 : "",
-  theme_advanced_buttons3 : "",
-  theme_advanced_toolbar_location : "top",
-  theme_advanced_toolbar_align : "left",
-  theme_advanced_statusbar_location : "bottom",  
-  content_css : "/stylesheets/tinymce.css",
-  language : "de"
-  });
+    %p
+      = f.label :title, t(".name.field.title")
+      = f.text_field :title, :size=>60
+
+    %p
+      = f.label :tag_list, t(".name.field.themes")
+      = f.text_field :tag_list, :size=>60, :autocomplete => "off"
+      #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
+    %p= t(".name.theme_hint")
+
+    %p
+      = f.label :location, t(".venue.field.location")
+      = f.text_field :location, :size=>60
+
+    %h3= t(".information.title")
+    %p
+      = f.label :description, t(".information.field.description")
+      = f.text_area :description, :cols=>60
+
+    -# TINYMCE
+    :javascript
+      tinyMCE.init({
+      mode : "textareas",
+      theme : "advanced",
+      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
+      theme_advanced_buttons2 : "",
+      theme_advanced_buttons3 : "",
+      theme_advanced_toolbar_location : "top",
+      theme_advanced_toolbar_align : "left",
+      theme_advanced_statusbar_location : "bottom",  
+      content_css : "/stylesheets/tinymce.css",
+      language : "de"
+      });
 
 %p
   = f.label :link, t(".information.field.link")
