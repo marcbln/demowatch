@@ -9,13 +9,13 @@ module EventsHelper
   
   def startdate_thisyear event
     if event.startdate.to_date == Time.now.to_date
-      "<div class='today'>" + t("datetime.distance_in_words.today") + "</div>"
+      "<div class='today'>" + t("datetime.distance_in_words.today") + "<br/>" + l(event.startdate.to_time,:format => t("time.formats.time")) + "</div>"
     elsif event.startdate.to_date == Time.now.to_date - 1
       "<div class='yesterday'>" + t("datetime.distance_in_words.yesterday") + "</div>"
     elsif event.startdate.to_date == Time.now.to_date + 1
-      "<div class='tomorrow'>" + t("datetime.distance_in_words.tomorrow") + "</div>"
+      "<div class='tomorrow'>" + t("datetime.distance_in_words.tomorrow") + "<br/>" + l(event.startdate.to_time,:format => t("time.formats.time")) + "</div>"
     elsif event.startdate <= Time.now && event.startdate > 6.hours.ago
-      "<div class='now'>" + t("datetime.distance_in_words.now") + "</div>"
+      "<div class='now'>" + t("datetime.distance_in_words.now") + "<br/>" + l(event.startdate.to_time,:format => t("time.formats.time")) + "</div>"
     elsif event.startdate.year == Time.now.year
       event.startdate && l(event.startdate, :format => :day_month)
     else
@@ -42,7 +42,7 @@ module EventsHelper
   def index_with_year events 
     result = []
     events.reverse.each_with_index do |event, index|
-      if index == 0 || event.startdate.to_date.year != @events[-index].startdate.to_date.year
+      if index == 0 || event.startdate.to_date.year != events[-index].startdate.to_date.year
         result << event.startdate.to_date.year
       end
     end

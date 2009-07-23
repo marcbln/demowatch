@@ -20,3 +20,42 @@
 - if @organisation.link
   %h3= t(".description.info.title")
   %p= sanitize(  link_to( h( @organisation.link), @organisation.link, { :target=>'_new'}))
+
+%h2=t(".demonstrations.title")
+- if @organisation.events.empty? 
+  %p=t(".demonstrations.empty")
+- else
+  .tabletitle=t(".demonstrations.table.title")
+  %table{:border=>0, :cellspacing=>0, :cellpadding=>0}
+    %tr
+      %td{:colspan=>@with_distance?4:3}
+        .anchor_index
+          - index_with_year(@organisation.events).each_with_index do |year, index|
+            = " | " if index > 0 
+            = link_to year, "#" + String(year)
+    %tr
+      %th=t(".demonstrations.table.head.time")
+      %th=t(".demonstrations.table.head.name")
+      %th=t(".demonstrations.table.head.place")
+      - if( @with_distance)
+        %th=t(".demonstrations.table.head.distance")
+      
+    - @organisation.events.each_with_index do |event, index|
+      - if index == 0 || event.startdate.to_date.year != @organisation.events[index-1].startdate.to_date.year
+        %tr
+          %td{:class=> index==0 ? "separator_first" : "separator", :colspan=>@with_distance?4:3}
+            %a{:name => event.startdate.to_date.year}
+            = event.startdate.to_date.year
+      %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
+        %td.center
+          %nobr= startdate_thisyear(event)
+        %td
+          = link_to h( event.title), event
+          - if event.comments.size > 0
+            = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
+        %td= h( event.address)
+        -if @with_distance       
+          - if !event.distance.nil?
+            %td= sprintf( "%.0f km", event.distance)  
+          - else
+            %td

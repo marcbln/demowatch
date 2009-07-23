@@ -70,3 +70,15 @@ de:
         title: "Beschreibung"
         info:
           title: "Weitere Informationen"
+      demonstrations:
+        title: "Demonstrationen"
+        emtpy: "Diese Organisation unterstützte bisher keine Demonstrationen."
+        table:
+          title: "Diese Organisation unterstützt die folgenden Demonstrationen:"
+          head:
+            time: "Termin"
+            name: "Demo"
+            place: "Ort"
+            distance: "Entfernung"
+          
+          

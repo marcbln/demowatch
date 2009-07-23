@@ -22,7 +22,7 @@
       :pm => "",
       :formats => {
         :default => "%d.%m.%Y %H:%M",
-        :time => "%H:%M",
+        :time => "%H:%M h",
         :day_month => "%m/%d",
         :day_month_year => "%m/%d/%Y",
         :day_abbr => "%a",

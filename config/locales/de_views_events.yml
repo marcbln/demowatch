@@ -8,11 +8,19 @@ de:
       add_comment:
         success: "Ergänzung wurde gespeichert"
       delete_comment_success: "Ergänzung wurde entfernt"
+      
+    event_types:
+      DemoEvent: "Demonstration"
+      PicketEvent: "Mahnwache"
+      FlashmobEvent: "Flashmob"
+      ChainEvent: "Menschenkette"
+      
+      
     fields:
       title: "Benötigte Angaben"
       name:
         field:
-          title: "Titel der Demonstration"
+          title: "Titel"
           themes: "Themen <i>(mehrere durch Komma getrennt)</i>"
         theme_hint: "Für die Themen wähle bitte <b>kurze und eindeutige Begriffe</b>. Die Wahl der Themen beeinflusst deren Popularität auf <i>Demowatch.de</i>. Es ist also <b>von Vorteil schon vorhandene Begriffe zu benutzen</b>!"
       venue: 
@@ -27,9 +35,15 @@ de:
           description: "Beschreibung"
           link: "Webseite (oder ggf. E-Mailadresse)"
           initiator: "Initiator"
+          event_type: "Art der Aktion"
       hint:
         title: "Hinweis"
         text: "Wir wollen unseren Besuchern stets möglichst korrekte und seriöse Informationen zu stattfindenden Demonstrationen bieten. <u>Alle verfassungs- oder gesetzeswidrigen Inhalte werden von uns umgehend gelöscht</u> und deren Verfasser ggf. auf <i>Demowatch.de</i> gesperrt!"
+        
+      organisation:
+        none: "Nicht angegeben"
+        pleaseselect: "Bitte auswählen..."
+        separator: "----------------------------------------------------------------------------------------"
 
 
 

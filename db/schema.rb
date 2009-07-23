@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090714094957) do
+ActiveRecord::Schema.define(:version => 20090723025930) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "title",                   :limit => 50, :default => ""
@@ -47,8 +47,18 @@ ActiveRecord::Schema.define(:version => 20090714094957) do
 
   add_index "demowatch_bak", ["zip"], :name => "index_zips_on_zip", :unique => true
 
+  create_table "event_translations", :force => true do |t|
+    t.string   "locale",      :limit => 2
+    t.integer  "event_id"
+    t.text     "title"
+    t.text     "description"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "events", :force => true do |t|
-    t.integer  "organisation_id",      :null => false
+    t.integer  "organisation_id",                     :null => false
     t.text     "title"
     t.text     "description"
     t.datetime "startdate"
@@ -64,7 +74,8 @@ ActiveRecord::Schema.define(:version => 20090714094957) do
     t.datetime "new_delivered_at"
     t.datetime "updated_delivered_at"
     t.datetime "deleted_at"
-    t.integer  "user_id",              :null => false
+    t.integer  "user_id",                             :null => false
+    t.integer  "event_type_id",        :default => 0
   end
 
   create_table "organisations", :force => true do |t|

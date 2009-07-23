@@ -96,7 +96,7 @@ class EventsController < ApplicationController
   # GET /events/new
   # GET /events/new.xml
   def new
-    @event = Event.new(:startdate => Time.now)
+    @event = Event.new(:startdate => Time.now, :event_type_id => Event::DemoEvent)
     @organisations = Organisation.find(:all, :order => 'title')
 # two letter codes
 @languages = %w{de en es fr}    
@@ -167,7 +167,7 @@ class EventsController < ApplicationController
       c = Comment.create(params[:comment])
       if c.update_attributes(params[:comment])
         @event.comments << c
-        CommentMailer::deliver_mail(current_user, c)
+        CommentMailer::deliver_mail(current_user, @event, c)
         flash[:notice] = t("events.flash.add_comment.success")
         format.html { redirect_to(@event) }
         format.xml  { head :ok }

@@ -11,4 +11,7 @@ titel:
 
 text: 
 = @comment.comment
+
+link: 
+= "http://" + @url + event_path(@event) + "#" + String(@comment.id)
   
