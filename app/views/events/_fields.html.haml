@@ -5,7 +5,6 @@
   = f.error_messages
 
 
-<<<<<<< HEAD:app/views/events/_fields.html.haml
 %h2= t(".meeting_place")
 
 %p
@@ -15,43 +14,11 @@
   %span{:id => 'addressDialogue', :style => 'display:none'} 
 
 %p
-=======
-%h2= t(".title")
-
-%p
-  = f.label :type, t(".information.field.event_type")
-  = select_tag 'event[event_type_id]', options_for_select(Event.event_types)
-
-%p
-  = f.label :title, t(".name.field.title")
-  = f.text_field :title, :size=>60
-
-%p
-  = f.label :tag_list, t(".name.field.themes")
-  = f.text_field :tag_list, :size=>60, :autocomplete => "off"
-  #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
-%p= t(".name.theme_hint")
-
-%p
-  = f.label :organisation, t(".information.field.initiator")
-  = select_tag 'event[organisation_id]', "<option value='-1'>" + t(".organisation.pleaseselect") + "</option>" + "<option value='-1'>" + t(".organisation.separator") + "</option>" + options_from_collection_for_select(@organisations, "id", "title", @event.organisation_id)
-
-%h3= t(".venue.title")
-%div{:id => 'addressContainer'}
-  %p
-    %a{:name => 'addressAnchor'}
-    = f.label :address, t(".venue.field.address")
-    = f.text_field :address, :size=>60
-    %span{:id => 'addressDialogue', :style => 'display:none'} 
-
-%p
->>>>>>> 1fe1078f3f1895ecf2a2f2ca9f501a913d59ab6d:app/views/events/_fields.html.haml
   = f.label :startdate, t(".venue.field.startdate")
   = datetime_select :event, :startdate 
 
 %h2= t(".title")
 
-<<<<<<< HEAD:app/views/events/_fields.html.haml
 %div{:class => 'tabbed_languages'}
   %div{:class=> 'tabs'}
     %div{:style => 'float:left; margin-right:16px;'}
@@ -99,36 +66,14 @@
       content_css : "/stylesheets/tinymce.css",
       language : "de"
       });
-=======
-%p
-  = f.label :location, t(".venue.field.location")
-  = f.text_field :location, :size=>60
-
-%h3= t(".information.title")
 
 %p
   = f.label :link, t(".information.field.link")
   = f.text_field :link, :size=>60
 
 %p
-  = f.label :description, t(".information.field.description")
-  = f.text_area :description, :cols=>60
-
--# TINYMCE
-:javascript
-  tinyMCE.init({
-  mode : "textareas",
-  theme : "advanced",
-  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
-  theme_advanced_buttons2 : "",
-  theme_advanced_buttons3 : "",
-  theme_advanced_toolbar_location : "top",
-  theme_advanced_toolbar_align : "left",
-  theme_advanced_statusbar_location : "bottom",  
-  content_css : "/stylesheets/tinymce.css",
-  language : "de"
-  });
->>>>>>> 1fe1078f3f1895ecf2a2f2ca9f501a913d59ab6d:app/views/events/_fields.html.haml
+  = f.label :organisation, t(".information.field.initiator")
+  = select_tag 'event[organisation_id]', options_from_collection_for_select(@organisations, "id", "title", @event.organisation_id)
 
 %h2= t(".hint.title")
 
