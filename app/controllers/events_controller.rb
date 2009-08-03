@@ -99,7 +99,9 @@ class EventsController < ApplicationController
     @event = Event.new(:startdate => Time.now, :event_type_id => Event::DemoEvent)
     @organisations = Organisation.find(:all, :order => 'title')
 # two letter codes
-@languages = %w{de en es fr}    
+@languages = I18N_ALL_LANGUAGES
+
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @event }
@@ -109,8 +111,10 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
+@event.globalize_translations.build
 # two letter codes
-@languages = %w{de en es fr}
+@languages = @event.languages
+#    @translations = @event.globalize_translations.find(:all, :order => "locale ASC")
   end
 
   # POST /events
@@ -126,7 +130,7 @@ class EventsController < ApplicationController
       else
         @organisations = Organisation.find(:all, :order => 'title')
 # two letter codes
-@languages = %w{de en es fr}          
+@languages = I18N_ALL_LANGUAGES         
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end

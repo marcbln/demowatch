@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   before_filter :redirect_to_www_demowatch_de
   before_filter :set_locale
   def set_locale
+    I18n.default_locale = 'en' # default fallback
     if request.host.include?('localhost') 
       I18n.locale = 'de'
     else

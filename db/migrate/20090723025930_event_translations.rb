@@ -17,6 +17,12 @@ class EventTranslations < ActiveRecord::Migration
         :title => e[:title], 
         :description => e[:description],
         :location => e[:location])
+      EventTranslation.create (
+        :event=> e,  
+        :locale => 'en', 
+        :title => 'TEST-ENG ... ' + e[:title], 
+        :description => 'TEST-ENG ... ' + e[:description],
+        :location => 'TEST-ENG ... ' + e[:location])
       p e[:title]
     end
 

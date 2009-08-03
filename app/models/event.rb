@@ -23,7 +23,8 @@ class Event < ActiveRecord::Base
   belongs_to :user
   
   translates :title, :description, :location
- 
+  accepts_nested_attributes_for :globalize_translations
+
   DemoEvent = 0
   PicketEvent = 1
   FlashmobEvent = 2
@@ -66,6 +67,18 @@ class Event < ActiveRecord::Base
       end
     end
   end
+
+# returns all languages for which a translation exists
+# used for the language-selection tabs in forms
+  def languages
+    translations = EventTranslation.find(:all, :conditions=> "event_id='#{self.id}'", :order => 'locale ASC')
+    langs = []
+    translations.each do |t|
+      langs.push t.locale.to_s # ist komischerweise ein symbol
+    end
+    return langs
+  end
+  
   
 private
 
@@ -84,5 +97,5 @@ private
 #    errors.add_to_base "Bitte geben Sie eine Adresse ein." if address.blank?
 #  end
   
-  
+
 end
