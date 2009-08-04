@@ -111,9 +111,10 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
-@event.globalize_translations.build
+    @event.globalize_translations.build( :title => 'XXXXXXXXX') 
 # two letter codes
 @languages = @event.languages
+@current_language = 'en'
 #    @translations = @event.globalize_translations.find(:all, :order => "locale ASC")
   end
 

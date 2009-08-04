@@ -68,6 +68,14 @@ class Event < ActiveRecord::Base
     end
   end
 
+
+  # virtual attribute setter
+  def translation_attributes=( translation_attributes)
+    p '===================='
+    p translation_attributes.inspect
+    p '===================='
+  end
+
 # returns all languages for which a translation exists
 # used for the language-selection tabs in forms
   def languages
@@ -96,6 +104,7 @@ private
 #  def validate
 #    errors.add_to_base "Bitte geben Sie eine Adresse ein." if address.blank?
 #  end
-  
+
+
 
 end
