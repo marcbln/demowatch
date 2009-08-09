@@ -111,11 +111,13 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
-    @event.globalize_translations.build( :title => 'XXXXXXXXX') 
-# two letter codes
-@languages = @event.languages
+    @event.globalize_translations.collect
+    
+    @languages = []
+    @event.globalize_translations.each do |tr|
+      @languages.push tr.locale.to_s
+    end
 @current_language = 'en'
-#    @translations = @event.globalize_translations.find(:all, :order => "locale ASC")
   end
 
   # POST /events

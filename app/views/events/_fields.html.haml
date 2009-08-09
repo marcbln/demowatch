@@ -1,5 +1,12 @@
 - content_for :header do
   = javascript_include_tag 'http://maps.google.com/maps?file=api&amp;v=2&amp;key=' + google_maps_key + '&dummy=xxxx', 'geocode', 'tiny_mce/tiny_mce' 
+  = javascript_include_tag 'language_tabs'
+  %script{ :language=>'javascript'}
+    i18n_all_languages = new Array( 
+    = "'" + I18N_ALL_LANGUAGES * "', '" + "'"
+    );
+
+
 
 %p
   = f.error_messages
@@ -20,17 +27,17 @@
 %h2= t(".title")
 
 
+-#
+-# die tabs
+-#
 %div{:class => 'tabbed_languages'}
   %div{:class=> 'tabs'}
     %div{:style => 'float:left; margin-right:16px;'}
       Sprache wählen:
     - @languages.each do |lang|
-      - if lang==@current_language
-        %div{:class=>'tab_active'}
-          %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang}
-      - else
-        %div{:class=>'tab_inactive'}
-          %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang}
+      - css_class = lang==@current_language ? 'tab_active' : 'tab_inactive'
+      %div{:class=>css_class, :id=>'language_tab_' + lang, :onClick=>"switch_language_tab('"+lang+"')"}
+        %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang, :title=>lang}
           
   %div{ :class=>'content' }
 
@@ -40,8 +47,32 @@
       #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
     %p= t(".name.theme_hint")
 
-
-    = render :partial => 'translation', :collection => @event.globalize_translations
+-#
+-# die inhalts-container (translations)
+-#
+- @event.globalize_translations.each do |translation|
+  - css_style = translation.locale.to_s == @current_language ? '' : 'display:none' 
+  %div{ :style=>css_style, :id=>'translation_container_' + translation.locale.to_s}
+    = render :partial => 'translation', :object=>translation
+  
+-#
+-# TINYMCE
+-#
+:javascript
+  tinyMCE.init({
+  mode : "textareas",
+  theme : "advanced",
+  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
+  theme_advanced_buttons2 : "",
+  theme_advanced_buttons3 : "",
+  theme_advanced_toolbar_location : "top",
+  theme_advanced_toolbar_align : "left",
+  theme_advanced_statusbar_location : "bottom",
+  content_css : "/stylesheets/tinymce.css",
+  width : "500",
+  height: "300",
+  language : "en"
+  });
 
 
 

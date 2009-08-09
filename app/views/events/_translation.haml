@@ -1,28 +1,13 @@
--# fields_for 'event[translation_attributes][]', translation do |trans_form|
-- fields_for 'event[translation_attributes]', translation do |trans_form|
+- fields_for 'event[translation_attributes][]', translation do |trans_form|
   %p
-    = trans_form.label :title, t(".name.field.title")
+    = trans_form.label :title, t(".name.field.title") + " (" + translation.locale.to_s + ")"
     = trans_form.text_field :title, :size=>60
   %p
-    = trans_form.label :location, t(".venue.field.location")
+    = trans_form.label :location, t(".venue.field.location") + " (" + translation.locale.to_s + ")"
     = trans_form.text_field :location, :size=>60
 
   %h3= t(".information.title")
   %p
-    = trans_form.label :description, t(".information.field.description")
+    = trans_form.label :description, t(".information.field.description") + " (" + translation.locale.to_s + ")"
     = trans_form.text_area :description, :cols=>60
 
-  -# TINYMCE
-  :javascript
-    tinyMCE.init({
-    mode : "textareas",
-    theme : "advanced",
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
-    theme_advanced_buttons2 : "",
-    theme_advanced_buttons3 : "",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_statusbar_location : "bottom",
-    content_css : "/stylesheets/tinymce.css",
-    language : "de"
-    });

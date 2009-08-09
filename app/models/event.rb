@@ -74,15 +74,23 @@ class Event < ActiveRecord::Base
     p '===================='
     p translation_attributes.inspect
     p '===================='
+    translation_attributes.each do |tr_id,translation|
+      if( tr_id)
+        tr = globalize_translations.find_by_id( tr_id)
+        tr.update_attributes( translation)
+      else
+        globalize_translations.build(translation)
+      end
+    end
   end
 
 # returns all languages for which a translation exists
-# used for the language-selection tabs in forms
+# .... unused...
   def languages
     translations = EventTranslation.find(:all, :conditions=> "event_id='#{self.id}'", :order => 'locale ASC')
     langs = []
     translations.each do |t|
-      langs.push t.locale.to_s # ist komischerweise ein symbol
+      langs.push t.locale.to_s
     end
     return langs
   end
