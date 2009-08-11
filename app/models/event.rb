@@ -45,6 +45,9 @@ class Event < ActiveRecord::Base
 # SEO friendly URLs
   def to_param
     id.to_s+'-' + title.downcase.
+    gsub('á', 'a').
+    gsub('à', 'a').
+    gsub('â', 'a').
     gsub('ä', 'ae').
     gsub('ö', 'oe').
     gsub('ü', 'ue').
