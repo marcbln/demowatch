@@ -1,13 +1,16 @@
-- fields_for 'event[translation_attributes][]', translation do |trans_form|
-  %p
-    = trans_form.label :title, t(".name.field.title") + " (" + translation.locale.to_s + ")"
-    = trans_form.text_field :title, :size=>60
-  %p
-    = trans_form.label :location, t(".venue.field.location") + " (" + translation.locale.to_s + ")"
-    = trans_form.text_field :location, :size=>60
+%div{ :style=>css_style, :id=>'translation_container_' + translation.locale.to_s}
+  - new_or_existing = translation.new_record? ? 'new' : 'existing'
+  - fields_for "event[#{new_or_existing}_translation_attributes][]", translation do |trans_form|
+    %p
+      = trans_form.label :title, t(".name.field.title") + " (" + translation.locale.to_s + ")"
+      = trans_form.text_field :title, :size=>60
+    %p
+      = trans_form.label :location, t(".venue.field.location") + " (" + translation.locale.to_s + ")"
+      = trans_form.text_field :location, :size=>60
 
-  %h3= t(".information.title")
-  %p
-    = trans_form.label :description, t(".information.field.description") + " (" + translation.locale.to_s + ")"
-    = trans_form.text_area :description, :cols=>60
+    %h3= t(".information.title")
+    %p
+      = trans_form.label :description, t(".information.field.description") + " (" + translation.locale.to_s + ")"
+      = trans_form.text_area :description, :cols=>60
 
+    = trans_form.text_field :locale

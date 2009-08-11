@@ -12,7 +12,7 @@ function switch_language_tab( language) {
     t.addClassName('tab_active');
 
     /* switch content */
-    i18n_all_languages.each( function(l) {
+    i18n_active_languages.each( function(l) {
         var d = $('translation_container_' + l);
         if( d) {
             if( l == language) {
@@ -23,5 +23,9 @@ function switch_language_tab( language) {
             }
         }
     })
+}
 
+
+function add_language_tab_menu() {
+    Lightbox.showBoxByID('language_select_modal_dialog', 500, 300);
 }

@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
 
+  include TranslationHelper
+
   acts_as_taggable
   acts_as_bookmarkable
   acts_as_mappable :default_units => :kms, 
@@ -13,17 +15,18 @@ class Event < ActiveRecord::Base
 #  before_validation_on_create :geocode_address
   
   validates_presence_of  :address
-  validates_presence_of  :title
-  validates_length_of    :title, :within => 3..100
   validates_presence_of  :link
   validates_presence_of  :tag_list
   validates_presence_of  :organisation
 
   belongs_to :organisation
   belongs_to :user
-  
-  translates :title, :description, :location
-  accepts_nested_attributes_for :globalize_translations
+
+  has_many :event_translations
+  after_update :save_translations
+  validates_associated :event_translations, :message=>'^Sie müssen für jede Sprache einen Titel angeben'
+#  translates :title, :description, :location
+#  accepts_nested_attributes_for :event_translations
 
   DemoEvent = 0
   PicketEvent = 1
@@ -70,18 +73,33 @@ class Event < ActiveRecord::Base
 
 
   # virtual attribute setter
-  def translation_attributes=( translation_attributes)
-    p '===================='
-    p translation_attributes.inspect
-    p '===================='
-    translation_attributes.each do |tr_id,translation|
-      if( tr_id)
-        tr = globalize_translations.find_by_id( tr_id)
-        tr.update_attributes( translation)
-      else
-        globalize_translations.build(translation)
-      end
+  def existing_translation_attributes=( translation_attributes)
+    translation_attributes.each do |tr_id,tr_attributes|
+      tr = event_translations.detect { |t| t.id == tr_id.to_i  }
+      tr.attributes = tr_attributes
     end
+  end
+  # virtual attribute setter
+  def new_translation_attributes=( translation_attributes)
+    translation_attributes.each do |translation|
+      event_translations.build(translation)
+    end
+  end
+
+  def save_translations
+    event_translations.each do |tr|
+      tr.save(false)
+    end
+  end
+
+  def title
+    return TranslationHelper.get_translation( event_translations, :title)
+  end
+  def description
+    return TranslationHelper.get_translation( event_translations, :description)
+  end
+  def location
+    return TranslationHelper.get_translation( event_translations, :location)
   end
 
 # returns all languages for which a translation exists
@@ -106,6 +124,7 @@ private
     geo=GeoKit::Geocoders::MultiGeocoder.geocode(address)
     errors.add(:address, I18n.t("activerecord.errors.messages.google_not_found")) if !geo.success
     self.address,self.city,self.latitude,self.longitude = geo.full_address,geo.city,geo.lat,geo.lng if geo.success
+
 #    puts( geo.state + '##################');
   end
 

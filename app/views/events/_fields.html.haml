@@ -2,9 +2,11 @@
   = javascript_include_tag 'http://maps.google.com/maps?file=api&amp;v=2&amp;key=' + google_maps_key + '&dummy=xxxx', 'geocode', 'tiny_mce/tiny_mce' 
   = javascript_include_tag 'language_tabs'
   %script{ :language=>'javascript'}
-    i18n_all_languages = new Array( 
-    = "'" + I18N_ALL_LANGUAGES * "', '" + "'"
-    );
+    i18n_all_languages = new Array( '#{I18N_ALL_LANGUAGES * "', '"}' );
+    i18n_active_languages = new Array( '#{@languages * "', '"}' );
+  = load_lightbox
+%div{ :id=>'language_select_modal_dialog' :style=>"display:none"}
+  = render :partial => 'language_select_modal_dialog'
 
 
 
@@ -30,15 +32,19 @@
 -#
 -# die tabs
 -#
-%div{:class => 'tabbed_languages'}
-  %div{:class=> 'tabs'}
-    %div{:style => 'float:left; margin-right:16px;'}
+%div{ :class => 'tabbed_languages'}
+  %div{ :class=>'tabs' }
+    %div{ :style => 'float:left; margin-right:16px;' }
       Sprache wählen:
-    - @languages.each do |lang|
-      - css_class = lang==@current_language ? 'tab_active' : 'tab_inactive'
-      %div{:class=>css_class, :id=>'language_tab_' + lang, :onClick=>"switch_language_tab('"+lang+"')"}
-        %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang, :title=>lang}
-          
+    %div{ :id=>'translation_language_tabs' }
+      - @languages.each do |lang|
+        - css_class = lang==@current_language ? 'tab_active' : 'tab_inactive'
+        = render :partial=>'translation_language_tab', :locals=>{:lang=>lang, :css_class=>css_class}
+    %div{ :class=>'tab_inactive', :onClick=>'add_language_tab_menu()', :title=>'Sprache hinzufuegen' }
+      = image_tag( 'plus.gif', :alt=>'Sprache hinzufuegen')
+  
+  
+  
   %div{ :class=>'content' }
 
     %p
@@ -47,13 +53,13 @@
       #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
     %p= t(".name.theme_hint")
 
--#
--# die inhalts-container (translations)
--#
-- @event.globalize_translations.each do |translation|
-  - css_style = translation.locale.to_s == @current_language ? '' : 'display:none' 
-  %div{ :style=>css_style, :id=>'translation_container_' + translation.locale.to_s}
-    = render :partial => 'translation', :object=>translation
+  -#
+  -# die inhalts-container (translations)
+  -#
+  %div{ :id=>:translations_container }
+    - @event.event_translations.each do |translation|
+      - css_style = translation.locale.to_s == @current_language ? '' : 'display:none'
+      = render :partial => 'translation', :object=>translation, :locals => {:css_style => css_style}
   
 -#
 -# TINYMCE

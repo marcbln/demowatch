@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+
+
   before_filter :login_required, :except => [:index, :show, :archive, :maps_on, :maps_off]
   before_filter :find_event, :only => [:show, :edit, :update, :destroy]
   allow :edit, :update, :destroy, :user => [:owns?, :is_admin?]
@@ -53,12 +55,21 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.xml
   def show
+    # 301 falls nicht die richtige url ...
+    # urls sind verschieden fuer versch. sprachen aber selben event
+    if params[:id] != @event.to_param
+      redirect_to event_url( @event), :status=>:moved_permanently
+      return
+    end
+      
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event }
       format.ics  { render :inline => ical([@event]) }
 
-      
+
+
+
 # (opt.) parameter fuer marker_init:
 #        :info_bubble => render_to_string(:partial => 'bubble')
 #        :label => ''CGI.escapeHTML( @event.title), 
@@ -111,13 +122,13 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
-    @event.globalize_translations.collect
+    @event.event_translations.collect
     
     @languages = []
-    @event.globalize_translations.each do |tr|
-      @languages.push tr.locale.to_s
+    @event.event_translations.each do |tr|
+      @languages.push tr.locale
     end
-@current_language = 'en'
+    @current_language = @languages.first
   end
 
   # POST /events
@@ -149,6 +160,11 @@ class EventsController < ApplicationController
         format.html { redirect_to(@event) }
         format.xml  { head :ok }
       else
+    @languages = []
+    @event.event_translations.each do |tr|
+      @languages.push tr.locale
+    end
+@current_language = params[:current_language]
         @organisations = Organisation.find(:all, :order => 'title')
         format.html { render :action => "edit" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }

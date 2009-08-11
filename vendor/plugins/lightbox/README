@@ -1,0 +1,12 @@
+Lightbox
+========
+
+This is a rails plugin based off the Multifaceted Lightbox @ http://www.gregphoto.net/lightbox/. The syntax for the plugin was copied from Redbox @ http://blog.craigambrose.com/articles/2006/08/16/redbox-a-rails-compatible-lightbox because of its ease of use. The reason for the plugins creation was after testing it can handle flash content in FF 2.0 Mac without any weird overlay bugs.
+
+To use:
+
+This loads the javascript and css needed for lightbox plugin.
+
+Insert between <head></head>: <%= load_lightbox %>
+
+Please refer to lightbox_helper for possible usage or goto redbox website to see commands to use. The equivalent for lightbox is the redbox function renamed with lightbox.

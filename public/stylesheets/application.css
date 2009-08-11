@@ -375,7 +375,7 @@ a.xmenu2:hover .xboxcontentd {background:#fff; border-color:#888; border-top:1px
 	border-right-color: red; border-right-style: double; border-right-width: 2px;
 	border-bottom-color: red;border-bottom-style: double; border-bottom-width: 2px;
 	background-color: mistyrose;
- 	font-weight: bold;
+ 	/*font-weight: bold; */
   padding-left: 3px;
 }
 

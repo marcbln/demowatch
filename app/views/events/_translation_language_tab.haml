@@ -1,0 +1,5 @@
+-# ein einzelnes tab..
+-# lang wird erwartet (de en es ...)
+-# css class wird erwartet
+%div{:class=>css_class, :id=>'language_tab_' + lang, :onClick=>"switch_language_tab('"+lang+"')"}
+  %img{ :src=> '/images/flags/' + lang + '.gif', :alt=>lang, :title=>lang}

@@ -80,7 +80,9 @@ de:
         link: "Webseite (oder ggf. E-Mailadresse)"
         tag_list: Themen
         address: Adresse
-             
+        event_translations: Übersetzungen
+
+     
     errors:
       template:
         header:

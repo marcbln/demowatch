@@ -1,4 +1,5 @@
 module EventsHelper
+
   def event_owner_class
     ((current_user.owns? @event) ? "owner":"admin")
   end
