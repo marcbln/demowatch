@@ -105,7 +105,7 @@ class Event < ActiveRecord::Base
     return TranslationHelper.get_translation( event_translations, :location)
   end
 
-# returns all languages for which a translation exists
+# returns all languages for which translations exist
 # .... unused...
   def languages
     translations = EventTranslation.find(:all, :conditions=> "event_id='#{self.id}'", :order => 'locale ASC')
@@ -130,11 +130,6 @@ private
 
 #    puts( geo.state + '##################');
   end
-
-#  def validate
-#    errors.add_to_base "Bitte geben Sie eine Adresse ein." if address.blank?
-#  end
-
 
 
 end

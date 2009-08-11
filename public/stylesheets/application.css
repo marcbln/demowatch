@@ -476,6 +476,7 @@ hr  {
 	padding:0; 
 	margin:0;
 	height:32px;
+    width:100%;
 }
 .tabbed_languages .tabs .tab_active {
 	float:left;
