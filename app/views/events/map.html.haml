@@ -1,0 +1,47 @@
+- content_for :header do
+  = javascript_include_tag 'tiny_mce/tiny_mce' 
+  - if cookies[:google_maps]
+    = Mapstraction.header(:google, :host=>request.host)
+  - if cookies[:yahoo_maps]
+    = Mapstraction.header(:yahoo, :host=>request.host)
+  - if cookies[:openlayers_maps]
+    = Mapstraction.header(:openlayers, :host=>request.host)
+  - if cookies[:google_maps] || cookies[:yahoo_maps] || cookies[:openlayers_maps]  
+    - @map.center_zoom_on_bounds_init(events_bounds(@events))
+    - @map.control_init(:small => true)
+    - @map.marker_group_init(MarkerGroup.new(events_markers(@events)))
+    = @map.to_html
+
+- content_for :header do
+  = auto_discovery_link_tag :rss, :format => 'rss'
+
+%h1= t(".title")
+
+.contextmenu
+  - if logged_in? 
+    = link_to t(".contextmenu.new"), new_event_path
+    |
+  = link_to t(".contextmenu.current"), events_path
+    
+%p
+  -if cookies[:google_maps] || cookies[:yahoo_maps] || cookies[:openlayers_maps]
+    #map_canvas.indent{:style=>"width: 550px; height: 600px; border:solid 1px black;"}
+      = @map.div(:width => 550, :height => 600)
+    .center
+      - if !cookies[:google_maps]
+        = link_to t(".google_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:google}, :confirm => t(".google_maps.confirm")
+        |
+      - if !cookies[:yahoo_maps]
+        = link_to t(".yahoo_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:yahoo}, :confirm => t(".yahoo_maps.confirm")
+        |
+      - if !cookies[:openlayers_maps]
+        = link_to t(".openlayers_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:openlayers}, :confirm => t(".openlayers_maps.confirm")
+        |
+      = link_to t(".card.hide"), { :controller => "events", :action => "maps_off", :id => "map"}
+  -else
+    .center
+      = link_to t(".google_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:google}, :confirm => t(".google_maps.confirm")
+      |
+      = link_to t(".yahoo_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:yahoo}, :confirm => t(".yahoo_maps.confirm")
+      |
+      = link_to t(".openlayers_maps.show"), { :controller => "events", :action => "maps_on", :id => "map", :type=>:openlayers}, :confirm => t(".openlayers_maps.confirm")

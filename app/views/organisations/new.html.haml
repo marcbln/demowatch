@@ -3,8 +3,6 @@
   = link_to t(".contextmenu.back"), organisations_path 
 %br
 
-%b= t(".warning")
-
 - form_for(@organisation) do |f| 
   = render :partial => 'fields', :locals => {:f => f}
 

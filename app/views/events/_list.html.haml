@@ -1,0 +1,42 @@
+- index_type = Event::Yearly if local_assigns[:index_type].nil?
+- autohide_index = true if local_assigns[:autohide_index].nil? 
+
+- sections = Event.chron_sections(events,index_type)
+- show_index = autohide_index ? sections.size > 1 : true
+- if !title.nil?
+  .tabletitle=title
+%table{:border=>0, :cellspacing=>0, :cellpadding=>0}
+  - if show_index
+    %tr
+      %td{:colspan => @with_distance ? 4 : 3}
+        .anchor_index
+          = sections.map{|section| link_to section.first, "##{section.first}"}.join(' | ')
+
+  %tr
+    %th=t(".table.head.time")
+    %th=t(".table.head.name")
+    %th=t(".table.head.place")
+    - if @with_distance
+      %th=t(".table.head.distance")
+
+  - sections.each_with_index do |section, index|
+    %tr
+      %td{:class=> "separator#{'_first' if index.zero?}", :colspan => @with_distance ? 4 : 3}
+        %a{:name => section.first}
+        = section.first
+
+    - section.last.each do |event|
+      %tr{:class => "#{cycle('even', 'odd')} #{'old' if event.startdate <= 6.hours.ago} #{'canceled' if event.canceled}"}
+        %td.center
+          %nobr= startdate_thisyear(event)
+        %td
+          - if event.created_at > 2.days.ago
+            = image_tag "new.png", :class => "bondedimage", :style => age_opacity(event.created_at, 48)
+          - elsif event.changed_at > 2.days.ago
+            = image_tag "update.png", :class => "bondedimage", :style => age_opacity(event.changed_at, 48)
+
+          = link_to h(event.title), event
+          = link_to " (#{event.comments.size})", "#{event_path event}#comments" if event.comments.size > 0
+        %td= h(event.city)
+        -if @with_distance       
+          %td= "%.0f km" % event.distance unless event.distance.nil? 

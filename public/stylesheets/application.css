@@ -462,6 +462,7 @@ hr  {
 	border-bottom:1px solid red;
 }
 
+
 /** 
 * demo-edit: language-tabs 
 */
@@ -499,4 +500,22 @@ hr  {
 .tabbed_languages .content {
 	padding:0 0 0 0;
 	margin:0;
+}
+
+.canceled  { 
+  text-decoration:line-through; 
+}
+
+.bondedimage {
+  float : right;
+  margin-top: -5px;
+  margin-right: -5px;
+  margin-bottom: -5px;
+}
+
+.event_updated_at {
+  text-align: right;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-style: italic;
 }

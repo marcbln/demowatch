@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
   
   before_filter :redirect_to_www_demowatch_de
   before_filter :set_locale
+  before_filter :save_count
+
   def set_locale
     I18n.default_locale = 'en' # default fallback
     if request.host.include?('localhost') 
@@ -46,7 +48,11 @@ class ApplicationController < ActionController::Base
       end
     end
   end  
-  
+  def save_count
+    pv = PageView.find_or_create_by_url_and_date(request.path, Date.today)
+    PageView.increment_counter(:count, pv)
+  end
+
 protected
   def permission_denied(exception)
     flash[:notice] = t("layouts.application.flash.no_permission")

@@ -9,11 +9,11 @@
   - if cookies[:openlayers_maps]
     = Mapstraction.header(:openlayers)
     = @map.to_html
-
-
   
 .ical= link_to image_tag('ical.gif'), :format => 'ics'
-%h1= h @event.title
+  
+%h1{ :class => "#{'canceled' if @event.canceled}" }
+  = h @event.title
 
 - if logged_in?
   .contextmenu
@@ -26,38 +26,35 @@
         | 
         = link_to t(".contextmenu.edit"), edit_event_path(@event)
         |
+        - if @event.canceled
+          = link_to t(".contextmenu.uncancel"), uncancel_event_path(@event), :confirm => t(".confirm.uncancel"), :method => :post
+        -else
+          = link_to t(".contextmenu.cancel"), cancel_event_path(@event), :confirm => t(".confirm.cancel"), :method => :post
+        | 
         = link_to t(".contextmenu.delete"), @event, :confirm => t(".confirm.delete"), :method => :delete
-         
+  
 %h2= t(".themes.title")
 %p= @event.tags.map{|tag| link_to h( tag.name), :controller=>:tag, :action=>tag.name}.join(', ')
 
 %h2= t(".venue.title")
-%p
-  = startdate_nice(@event)
-  = t(".venue.address", :address => @event.address)
-  = t(".venue.location", :location => h(@event.location)) if @event.location?
+- if @event.canceled
+  %p.red= t(".venue.canceled")
+- else
+  %p
+    = startdate_nice(@event)
+    = t(".venue.address", :address => @event.address)
+    = t(".venue.location", :location => h(@event.location)) if @event.location?
 
--if cookies[:google_maps] || cookies[:yahoo_maps] || cookies[:openlayers_maps]
-  #map_canvas.indent{:style=>"width: 550px; height: 300px; border:solid 1px black;"}
-    = @map.div(:width => 550, :height => 300)
-  .center
-    - if !cookies[:google_maps]
-      = link_to t(".google_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:google}, :confirm => t(".google_maps.confirm")
+  - maps = [:google, :yahoo, :openlayers]
+  -if maps.any?{|m| cookies["#{m}_maps"]}
+    #map_canvas.indent{:style=>"width: 550px; height: 300px; border:solid 1px black;"}
+      = @map.div(:width => 550, :height => 300)
+    .center
+      = maps.reject{|m| cookies["#{m}_maps"]}.map{|m| link_to t(".#{m}_maps.show"), maps_on_event_path(@event, :type => m), :confirm => t(".#{m}_maps.confirm")}.join(' | ')
       |
-    - if !cookies[:yahoo_maps]
-      = link_to t(".yahoo_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:yahoo}, :confirm => t(".yahoo_maps.confirm")
-      |
-    - if !cookies[:openlayers_maps]
-      = link_to t(".openlayers_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:openlayers}, :confirm => t(".openlayers_maps.confirm")
-      |
-    = link_to t(".card.hide"), { :controller => "events", :action => "maps_off", :id => @event.id}
--else
-  .center
-    = link_to t(".google_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:google}, :confirm => t(".google_maps.confirm")
-    |
-    = link_to t(".yahoo_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:yahoo}, :confirm => t(".yahoo_maps.confirm")
-    |
-    = link_to t(".openlayers_maps.show"), { :controller => "events", :action => "maps_on", :id => @event.id, :type=>:openlayers}, :confirm => t(".openlayers_maps.confirm")
+      = link_to t(".card.hide"), { :controller => "events", :action => "maps_off", :id => @event.id}
+  -else
+    .center= maps.map{|m| link_to t(".#{m}_maps.show"), maps_on_event_path(@event, :type => m), :confirm => t(".#{m}_maps.confirm")}.join(' | ')
 
 %h2= t(".description.title")
 %p= sanitize @event.description
@@ -69,6 +66,17 @@
 
 %h3= t(".description.info.title")
 %p= sanitize link_to( h(@event.link), @event.link, :target=>'_new')
+
+.event_updated_at
+  = t(".times.updated_at")
+  = l(@event.updated_at)
+
+-if !@event.contras.empty?
+  %h2= t(".contras.title")
+  %p= t(".contras.table_title")
+  %ul
+    - @event.contras.each do |e|
+      %li= link_to h(e.title), e
 
 - comments = @event.comments.recent.all
 - if !comments.empty? 
@@ -113,17 +121,17 @@
 
       .buttons= f.submit t(".button.add_comment")
 
-  -# TINYMCE
-  :javascript
-    tinyMCE.init({
-    mode : "textareas",
-    theme : "advanced",
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
-    theme_advanced_buttons2 : "",
-    theme_advanced_buttons3 : "",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_statusbar_location : "bottom",  
-    content_css : "/stylesheets/tinymce.css",
-    language : "de"
-    });
+-# TINYMCE
+:javascript
+  tinyMCE.init({
+  mode : "textareas",
+  theme : "advanced",
+  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
+  theme_advanced_buttons2 : "",
+  theme_advanced_buttons3 : "",
+  theme_advanced_toolbar_location : "top",
+  theme_advanced_toolbar_align : "left",
+  theme_advanced_statusbar_location : "bottom",  
+  content_css : "/stylesheets/tinymce.css",
+  language : "de"
+  });

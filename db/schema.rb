@@ -9,7 +9,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090723025930) do
+
+ActiveRecord::Schema.define(:version => 20090805202017) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "title",                   :limit => 50, :default => ""
@@ -38,15 +39,6 @@ ActiveRecord::Schema.define(:version => 20090723025930) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
-  create_table "demowatch_bak", :force => true do |t|
-    t.string "zip",       :limit => 5
-    t.string "name"
-    t.float  "latitude"
-    t.float  "longitude"
-  end
-
-  add_index "demowatch_bak", ["zip"], :name => "index_zips_on_zip", :unique => true
-
   create_table "event_translations", :force => true do |t|
     t.string   "locale",      :limit => 2
     t.integer  "event_id"
@@ -74,8 +66,9 @@ ActiveRecord::Schema.define(:version => 20090723025930) do
     t.datetime "new_delivered_at"
     t.datetime "updated_delivered_at"
     t.datetime "deleted_at"
-    t.integer  "user_id",                             :null => false
+    t.integer  "user_id",                                 :null => false
     t.integer  "event_type_id",        :default => 0
+    t.boolean  "canceled",             :default => false
   end
 
   create_table "organisations", :force => true do |t|
@@ -92,6 +85,12 @@ ActiveRecord::Schema.define(:version => 20090723025930) do
     t.integer  "role",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "page_views", :force => true do |t|
+    t.string  "url"
+    t.integer "count"
+    t.date    "date"
   end
 
   create_table "taggings", :force => true do |t|

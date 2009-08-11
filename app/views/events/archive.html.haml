@@ -11,39 +11,4 @@
     
 %br
 
-.tabletitle
-  = t(".table.title")
-
-%table{:border=>0, :cellspacing=>0, :cellpadding=>0}
-  %tr
-    %td{:colspan=>@with_distance?4:3}
-      .anchor_index
-        - index_with_year(@events).each_with_index do |year, index|
-          = " | " if index > 0 
-          = link_to year, "#" + String(year)
-  %tr
-    %th= t(".table.head.startdate")
-    %th= t(".table.head.title")
-    %th= t(".table.head.city")
-    - if( @with_distance)
-      %th= t(".table.head.distance")
-  - @events.each_with_index do |event, index|
-    - if index == 0 || event.startdate.to_date.year != @events[index-1].startdate.to_date.year
-      %tr
-        %td{:class=> index==0 ? "separator_first" : "separator", :colspan=>@with_distance?4:3}
-          %a{:name => event.startdate.to_date.year}
-          = event.startdate.to_date.year
-    %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
-      %td.center
-        %nobr= startdate_thisyear(event)
-      %td
-        = link_to h( event.title), event
-        - if event.comments.size > 0
-          = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
-      %td= event.city
-      -if @with_distance       
-        - if !event.distance.nil?
-          %td
-            .right= sprintf( "%.0f km", event.distance)  
-        - else
-          %td
+= render :partial => 'events/list', :locals => {:title => t(".events.table_title"), :events => @events}

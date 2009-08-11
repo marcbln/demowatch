@@ -52,7 +52,6 @@ de:
         back: "Zurück zur Initiatorenliste"
       button:
         submit: "Erzeugen"
-      warning: "<div class='red'>Hier bitte die Daten des Initiators und <u>nicht</u> die der Demo eingeben!</div>"
 
 
 
@@ -70,15 +69,8 @@ de:
         title: "Beschreibung"
         info:
           title: "Weitere Informationen"
-      demonstrations:
+      events:
         title: "Demonstrationen"
-        emtpy: "Diese Organisation unterstützte bisher keine Demonstrationen."
-        table:
-          title: "Diese Organisation unterstützt die folgenden Demonstrationen:"
-          head:
-            time: "Termin"
-            name: "Demo"
-            place: "Ort"
-            distance: "Entfernung"
-          
+        empty: "Diese Organisation unterstützte bisher keine Demonstrationen."
+        table_title: "Diese Organisation unterstützt die folgenden Demonstrationen:"
           

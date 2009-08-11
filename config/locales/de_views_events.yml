@@ -8,6 +8,10 @@ de:
       add_comment:
         success: "Ergänzung wurde gespeichert"
       delete_comment_success: "Ergänzung wurde entfernt"
+      cancel:
+        success: "Aktion wurde abgesagt!"
+      uncancel:
+        success: "Aktion wurde wieder zugesagt!"
       
     event_types:
       DemoEvent: "Demonstration"
@@ -53,13 +57,8 @@ de:
         current: "Aktuelle Demos"
         archive: "Vergangene Demos"
         new: "Demo eintragen"
-      table:
-        title: "Folgende Aktionen sind bereits vorbei:"
-        head:
-          startdate: "Termin"
-          title: "Demo"
-          city: "Ort"
-          distance: "Entfernung"
+      events:
+        table_title: "Folgende Aktionen sind bereits vorbei:"
 
 
 
@@ -79,15 +78,7 @@ de:
         archive: "Vergangene Demos"
         new: "Demo eintragen"
         map: "Karte"
-      confirm:
-        maps: "Hinweis: Dieser Link führt Sie auf die Seiten von Google Maps."
-      table:
-        title: "Folgende Aktionen sind uns für die kommende Zeit bekannt:"
-        head:
-          startdate: "Termin"
-          title: "Demo"
-          city: "Ort"
-          distance: "Entfernung"
+      table_title: "Folgende Aktionen sind uns für die kommende Zeit bekannt:"
 
 
 
@@ -106,8 +97,14 @@ de:
         delete: "Löschen"
         unsubscribe: "Abbestellen"
         subscribe: "Abonnieren"
+        cancel: "Absagen"
+        uncancel: "Zusagen"
       confirm:
-        delete: "Demonstration wirklich löschen?"
+        delete: "Aktion wirklich löschen?"
+        cancel: "Aktion wirklich absagen?"
+        uncancel: "Aktion wirklich wieder zusagen?"
+      times:
+        updated_at: "Letzte Änderung:"
       themes:
         title: "Themen"
       venue:
@@ -119,15 +116,19 @@ de:
           tomorrow: "<span class='red'>Diese Aktion beginnt morgen</span>, am <b>{{startdate}}</b>."
           soon: "<span class='red'>Diese Aktion beginnt in {{timespan}}</span>, am <b>{{startdate}}</b>."
           future: "Diese Aktion beginnt in <b>{{timespan}}</b>, am <b>{{startdate}}</b>."
+        canceled: "Diese Aktion wurde von den Veranstaltern abgesagt!!"
         address: "Treffpunkt ist <b>{{address}}</b>"
         location: "({{location}})"
       description:
         title: "Beschreibung"
         initiator:
           title: "Initiator"
-          text: "Diese Demo wurde eingetragen von"
+          text: "Diese Demo wird unterstützt von"
         info:
           title: "Weitere Informationen"
+      contras:
+          title: "Mögliche Gegendemonstrationen"
+          table_title: "Folgende Aktionen finden zum gleichen Zeitpunkt in der Nähe statt:"
       comments:
         add:
           title: "Neue Ergänzung eingeben"
@@ -155,3 +156,29 @@ de:
         confirm: "Bitte beachten Sie, dass Yahoo Maps die IP Ihres Rechners speichern und diese der URL dieser Seite zuordnen kann, wenn die Karten angezeigt werden."
         show: "Yahoo Maps-Karte"
 
+
+
+    map:
+      title: "Karte aktueller Demonstrationen"
+      contextmenu:
+        current: "Liste"
+        new: "Demo eintragen"
+      card:
+        hide: "Karte ausblenden"
+      openlayers_maps:
+        confirm: "Bitte beachten Sie, dass openlayers.org die IP Ihres Rechners speichern und diese der URL dieser Seite zuordnen kann, wenn die Karten angezeigt werden."
+        show: "OpenLayers-Karte"
+      google_maps:
+        confirm: "Bitte beachten Sie, dass Google Maps die IP Ihres Rechners speichern und diese der URL dieser Seite zuordnen kann, wenn die Karten angezeigt werden."
+        show: "Google Maps-Karte"
+      yahoo_maps:
+        confirm: "Bitte beachten Sie, dass Yahoo Maps die IP Ihres Rechners speichern und diese der URL dieser Seite zuordnen kann, wenn die Karten angezeigt werden."
+        show: "Yahoo Maps-Karte"
+
+    list:
+      table: 
+        head:
+          time: "Datum"
+          name: "Demo"
+          place: "Ort"
+          distance: "Entfernung"

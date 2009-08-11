@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :events, :collection => {:archive => :get}
+  map.resources :events, :collection => {:archive => :get, :map => :get}, :member => {:cancel => :post, :uncancel => :post, :maps_on => :get}
   map.resources :organisations
   map.resource :session
 

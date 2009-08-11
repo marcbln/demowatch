@@ -1,4 +1,4 @@
 log/*
 config/database.yml
 nbproject/
-
+*.swp

@@ -12,46 +12,12 @@
     |
     = link_to t(".contextmenu.new"), new_event_path
   |
-  = link_to t(".contextmenu.map"), "http://maps.google.de/maps?f=q&source=s_q&hl=de&geocode=&q=http://www.demowatch.de/events.rss&g=%2B52%C2%B0+28'+58.22&ie=UTF8&z=7", { :target=>'_new', :confirm => cookies[:maps]?nil:t(".confirm.maps") }
+  = link_to t(".contextmenu.map"), map_events_path
   .rss= link_to image_tag('rss.gif'), :format => 'rss'
-  .ical= link_to image_tag('ical.gif'), :format => 'ical'
+  .ical= link_to image_tag('ical.gif'), :format => 'ics'
   .twitter= link_to image_tag('twitter.gif'), "http://twitter.com/demowatch"
     
 %br
-.tabletitle
-  = t(".table.title")
-%table{:border=>0, :cellspacing=>0, :cellpadding=>0}
-  %tr
-    %td{:colspan=>@with_distance?4:3}
-      .anchor_index
-        - index_with_month(@events).each_with_index do |month, index|
-          = " | " if index > 0 
-          = link_to month, "#" + String(month)
-  
-  %tr
-    %th= t(".table.head.startdate")
-    %th= t(".table.head.title")
-    %th= t(".table.head.city")
-    - if( @with_distance)
-      %th= t(".table.head.distance")
-  - @events.each_with_index do |event, index|
-    - if index == 0 || event.startdate.to_date.month != @events[index-1].startdate.to_date.month
-      %tr
-        %td{:class=> index==0 ? "separator_first" : "separator", :colspan=>@with_distance?4:3}
-          %a{:name => l(event.startdate.to_date,:format=>"%B" + ((event.startdate.to_date.year != Time.now.year) ? " %Y" : "")) }
-          = l(event.startdate.to_date,:format=>"%B" + ((event.startdate.to_date.year != Time.now.year) ? " %Y" : ""))
-    %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
-      %td.center
-        %nobr= startdate_thisyear(event)
-      %td
-        = link_to h( event.title), event
-        - if event.comments.size > 0
-          = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
-      %td= h( event.city)
-      -if @with_distance       
-        - if !event.distance.nil?
-          %td
-            .right= sprintf( "%.0f km", event.distance)  
-        - else
-          %td
-%br
+
+= render :partial => 'events/list', :locals => {:title => t(".table_title"), :events => @events, :index_type => Event::Monthly }
+

@@ -16,12 +16,15 @@ de:
         text1: "Da die Interessen sicher genauso individuell, wie die Menschen selbst sind, können Sie sich bei uns Ihr persönliches Themenrepertoire zusammenstellen. Sie werden dann per E-Mail automatisch über neue Aktionen zu diesen Themen informiert."
         text2: "Wenn Sie sich vornehmen an einer Demonstration teilzunehmen, dann abonnieren Sie diese einfach auf <i>Demowatch.de</i>. Dadurch werden Sie rechtzeitig an den Termin erinnert und werden über jegliche Neuigkeiten informiert."
       section5: 
+        title: "Neutralität"
+        text: "<i>Demowatch.de</i> sprengt die thematischen Grenzen anderer Foren und informiert grundsätzlich und ganz bewusst über Aktionen zu allen Themen, ohne diese selbst zu bewerten. Die Bewertung wird dem Benutzer überlassen, der sich im umfassenden Angebot an Themen auf <i>Demowatch.de</i> selbst orientieren muss. Wir wollen so ganz allgemein das demokratische Mittel der friedlichen Demonstration unterstützen und eine Gesamtübersicht über alle Aktionen bieten."
+      section6: 
         title: "Seriösität"
         text: "Um eine Demonstration bei <i>Demowatch.de</i> einzutragen, muss man sich anmelden. Da wir seriöse Informationen bieten möchten, achten wir auf brauchbare Inhalte und stellen wenn möglich Rückfragen, wenn Angaben fehlerhaft zu sein scheinen. verfassungsrechtlich bedenkliche Inhalte und Aufrufe zu offensichtlich gewalttätigen Protestaktionen entfernen wir aus unserer Datenbank."
-      section6: 
+      section7:
         title: "Anonymität"
-        text: "Auf der anderen Seite veröffentlichen wir von unseren Besuchern keinerlei Daten. Der Benutzer bleibt auf <i>Demowatch.de</i> anonym. Zur Zeit hinterlässt er bei der Registrierung lediglich seine E-Mailadresse, damit der Erinnerungsdienst funktioniert und die ersten Stellen seiner Postleitzahl, damit wir Veranstaltungen in seiner Nähe finden können."
-      section7: 
+        text: "Auf der anderen Seite veröffentlichen wir von unseren Besuchern keinerlei Daten. Der Benutzer bleibt auf <i>Demowatch.de</i> anonym. Zur Zeit hinterlässt er bei der Registrierung lediglich seine E-Mailadresse, damit der Erinnerungsdienst funktioniert und die ersten Stellen seiner Postleitzahl, damit wir Veranstaltungen in seiner Nähe finden können. Demowatch ist offiziell von der Initiative <i>Wir Speichern nicht</i> als speicherfrei bestätigt!"
+      section8: 
         title: "Unser Motto:"
         text: "Ab heute gilt die Ausrede \"Hätte ich davon gehört, wäre ich dabei gewesen!\" nicht mehr! Werden Sie aktiv und bleiben Sie demokratisch!"
 
@@ -130,16 +133,10 @@ de:
         unsubscribe: "Thema abbestellen"
         subscribe: "Thema abonnieren"
         whatis: "Was bedeutet <i>{{tag}}</i>?"
-      demonstrations:
+      events:
         title: "Demonstrationen"
         emtpy: "Zu diesem Thema sind zur Zeit keine Demonstrationen eingetragen."
-        table:
-          title: "Die folgenden Demonstrationen sind uns zu diesem Thema bekannt:"
-          head:
-            time: "Termin"
-            name: "Demo"
-            place: "Ort"
-            distance: "Entfernung"
+        table_title: "Die folgenden Demonstrationen sind uns zu diesem Thema bekannt:"
       initiators:
         title: "Initiatoren"
         empty: "Zur Zeit sind keine Initiatoren eingetragen, die sich mit diesem Thema beschäftigen.."

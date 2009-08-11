@@ -14,45 +14,12 @@
   = link_to t(".contextmenu.whatis",:tag => @tag.name), 'http://de.wikipedia.org/wiki/Spezial:Suche?search=' + @tag.name + '&go=Artikel', :target=>'_new'
   .rss= link_to image_tag('rss.gif'), :controller => 'events', :format => 'rss', :tags => @tag.name if !@events.empty? 
 
-%h2=t(".demonstrations.title")
+%h2=t(".events.title")
 - if @events.empty? 
-  %p=t(".demonstrations.empty")
+  %p=t(".events.empty")
 - else
-  .tabletitle=t(".demonstrations.table.title")
-  %table{:border=>0, :cellspacing=>0, :cellpadding=>0}
-    %tr
-      %td{:colspan=>@with_distance?4:3}
-        .anchor_index
-          - index_with_year(@events).each_with_index do |year, index|
-            = " | " if index > 0 
-            = link_to year, "#" + String(year)
-    %tr
-      %th=t(".demonstrations.table.head.time")
-      %th=t(".demonstrations.table.head.name")
-      %th=t(".demonstrations.table.head.place")
-      - if( @with_distance)
-        %th=t(".demonstrations.table.head.distance")
-      
-    - @events.each_with_index do |event, index|
-      - if index == 0 || event.startdate.to_date.year != @events[index-1].startdate.to_date.year
-        %tr
-          %td{:class=> index==0 ? "separator_first" : "separator", :colspan=>@with_distance?4:3}
-            %a{:name => event.startdate.to_date.year}
-            = event.startdate.to_date.year
-      %tr{:class => "#{'even' if index.even?} #{'old' if event.startdate <= 6.hours.ago}"}
-        %td.center
-          %nobr= startdate_thisyear(event)
-        %td
-          = link_to h( event.title), event
-          - if event.comments.size > 0
-            = link_to " (" + String(event.comments.size) + ")", event_path(event) + "#comments"
-        %td= h( event.address)
-        -if @with_distance       
-          - if !event.distance.nil?
-            %td= sprintf( "%.0f km", event.distance)  
-          - else
-            %td
-            
+  = render :partial => 'events/list', :locals => {:title => t(".events.table_title"), :events => @events}
+  
 %h2=t(".initiators.title")
 
 - if @organisations.empty? 

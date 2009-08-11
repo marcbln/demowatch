@@ -1,7 +1,5 @@
 class EventsController < ApplicationController
-
-
-  before_filter :login_required, :except => [:index, :show, :archive, :maps_on, :maps_off]
+  before_filter :login_required, :except => [:index, :show, :archive, :map, :maps_on, :maps_off]
   before_filter :find_event, :only => [:show, :edit, :update, :destroy]
   allow :edit, :update, :destroy, :user => [:owns?, :is_admin?]
   
@@ -34,7 +32,6 @@ class EventsController < ApplicationController
   end
   
   def archive
-    @tags = params[:tags] 
     @with_distance = !current_user.nil? && !current_user.zip.nil?
     options = {:order => 'startdate DESC', :conditions => "startdate < '#{1.day.ago.to_formatted_s(:db)}'"}
     if @with_distance   
@@ -42,7 +39,6 @@ class EventsController < ApplicationController
       # options[:within] = distance_in_km # Fuer umkreissuche
       @zip = current_user.zip.zip
     end
-    options = Event.find_options_for_find_tagged_with(@tags, options) if @tags
     
     respond_to do |format|
       format.html { @events = Event.all(options) }
@@ -52,6 +48,16 @@ class EventsController < ApplicationController
     end
   end  
   
+  def map
+    options = {:order => 'startdate ASC', :conditions => "startdate > '#{1.day.ago.to_formatted_s(:db)}'"}
+    
+    respond_to do |format|
+      format.html { @events = Event.all(options) }
+      init_map
+    end
+  end
+  
+
   # GET /events/1
   # GET /events/1.xml
   def show
@@ -74,20 +80,7 @@ class EventsController < ApplicationController
 #        :info_bubble => render_to_string(:partial => 'bubble')
 #        :label => ''CGI.escapeHTML( @event.title), 
 #        :icon => "/img/marker.png"
-      if cookies[:google_maps]
-        @map = Mapstraction.new("map_div",:google)
-        @map.center_zoom_init([@event.latitude, @event.longitude],15)
-        @map.control_init(:small => true)
-        @map.marker_init(Marker.new([@event.latitude, @event.longitude]))
-      end
-      if cookies[:yahoo_maps]
-        @map = Mapstraction.new("map_div",:yahoo)
-        @map.center_zoom_init([@event.latitude, @event.longitude],15)
-        @map.control_init(:small => true)
-        @map.marker_init(Marker.new([@event.latitude, @event.longitude]))
-      end
-      if cookies[:openlayers_maps]
-        @map = Mapstraction.new("map_div",:openlayers)
+      if init_map
         @map.center_zoom_init([@event.latitude, @event.longitude],15)
         @map.control_init(:small => true)
         @map.marker_init(Marker.new([@event.latitude, @event.longitude]))
@@ -104,6 +97,17 @@ class EventsController < ApplicationController
     end
   end
 
+  def init_map
+    if cookies[:google_maps]
+      @map = Mapstraction.new("map_div",:google)
+    elsif cookies[:yahoo_maps]
+      @map = Mapstraction.new("map_div",:yahoo)
+    elsif cookies[:openlayers_maps]
+      @map = Mapstraction.new("map_div",:openlayers)
+    end
+    cookies[:google_maps] || cookies[:yahoo_maps] || cookies[:openlayers_maps]
+  end
+  
   # GET /events/new
   # GET /events/new.xml
   def new
@@ -177,9 +181,33 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-
+  
     respond_to do |format|
       format.html { redirect_to(events_url) }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def cancel
+    @event = Event.find(params[:id])
+    @event.canceled = true
+    @event.save
+
+    respond_to do |format|
+      flash[:notice] = t("events.flash.cancel.success")
+      format.html { redirect_to(@event) }
+      format.xml  { head :ok }
+    end
+  end
+
+  def uncancel
+    @event = Event.find(params[:id])
+    @event.canceled = false
+    @event.save
+
+    respond_to do |format|
+      flash[:notice] = t("events.flash.uncancel.success")
+      format.html { redirect_to(@event) }
       format.xml  { head :ok }
     end
   end
@@ -215,22 +243,30 @@ class EventsController < ApplicationController
   end
   
   def maps_on
+    delete_maps_cookies()
+    cookies[params[:type] + '_maps'] = { :value => true, :expires => 10.years.from_now }
     respond_to do |format|
-      @event = Event.find(params[:id])
-      delete_maps_cookies()
-      cookies[params[:type] + '_maps'] = { :value => true, :expires => 10.years.from_now }
-      format.html { redirect_to(@event) }
+      if params[:id] == "map"
+        format.html { redirect_to(:action => :map) }
+      else
+        @event = Event.find(params[:id])
+        format.html { redirect_to(@event) }
+      end
     end
   end
   
   def maps_off
+    delete_maps_cookies()
     respond_to do |format|
-      delete_maps_cookies()
-      @event = Event.find(params[:id])
-      format.html { redirect_to(@event) }
+      if params[:id] == "map"
+        format.html { redirect_to(:action => :map) }
+      else
+        @event = Event.find(params[:id])
+        format.html { redirect_to(@event) }
+      end
     end
   end
-  
+
 protected
   def find_event
     @event = Event.find(params[:id])

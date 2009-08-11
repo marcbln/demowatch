@@ -8,6 +8,18 @@ en:
       add_comment:
         success: "Comment submitted"
       delete_comment_success: "Comment deleted"
+      cancel:
+        success: "Demonstration has been canceled!"
+      uncancel:
+        success: "Demonstration has been assured!"
+      
+    event_types:
+      DemoEvent: "Demonstration"
+      PicketEvent: "Mahnwache"
+      FlashmobEvent: "Flashmob"
+      ChainEvent: "Menschenkette"
+
+
     fields:
       title: "Required information"
       name:
@@ -27,25 +39,26 @@ en:
           description: "Description"
           link: "Website (or e-mail address)"
           initiator: "Promoters"
+          event_type: "Event Type"
       hint:
         title: "Notice"
         text: "We want to offer our visitors always as accurate and reliable information of demonstrations taking place. <u>All unconstitutional or illegal content will be deleted</u> by us immediately, and its author, if applicable, will be locked <i>Demowatch.de</i>!"
+
+      organisation:
+        none: "Unknown"
+        pleaseselect: "Please select..."
+        separator: "----------------------------------------------------------------------------------------"
 
 
 
     archive:
       title: "Past demonstrations"
       contextmenu:
-        current: "Current Demonstrations"
-        archive: "Past demonstrations"
-        new: "New Demonstration"
-      table:
-        title: "The following actions have already passed:"
-        head:
-          startdate: "Date"
-          title: "Demonstration"
-          city: "Location"
-          distance: "Distance"
+        current: "Current demos"
+        archive: "Past demos"
+        new: "New Demo"
+      events:
+        table_title: "The following actions have already passed:"
 
 
 
@@ -62,18 +75,10 @@ en:
     index:
       title: "Current demonstrations"
       contextmenu:
-        archive: "Past demonstrations"
-        new: "New demonstration"
+        archive: "Past demo"
+        new: "New demo"
         map: "Map"
-      confirm:
-        maps: "Note: This link will forward you to Google Maps."
-      table:
-        title: "The following actions are known for the next time:"
-        head:
-          startdate: "Date"
-          title: "Demonstration"
-          city: "Location"
-          distance: "Distance"
+      table_title: "The following actions are known for the next time:"
 
 
 
@@ -92,8 +97,14 @@ en:
         delete: "Delete"
         unsubscribe: "Unsubscribe"
         subscribe: "Subscribe"
+        cancel: "Assure"
+        uncancel: "Cancel"
       confirm:
-        delete: "Really delete Demonstration"
+        delete: "Really delete demonstration"
+        cancel: "Really cancel this demonstration?"
+        uncancel: "Really re-assure this demonstration?"
+      times:
+        updated_at: "Last update:"
       themes:
         title: "Topics"
       venue:
@@ -105,15 +116,19 @@ en:
           tomorrow: "<span class='red'>This action will start </span>at <b>{{startdate}}</b>."
           soon: "<span class='red'>This action will start in {{timespan}}</span> on <b>{{startdate}}</b>."
           future: "This action will start in <b>{{timespan}}</b> on <b>{{startdate}}</b>."
+        canceled: "This event was canceld by the initiator!!"
         address: "Meeting place is <b>{{address}}</b>"
         location: "({{location}})"
       description:
         title: "Description"
         initiator:
           title: "Promoters"
-          text: "This demonstration was submitted by"
+          text: "This demonstration is provided by"
         info:
           title: "Additional Information"
+      contras:
+          title: "Potential Counter-Demonstrations"
+          table_title: "The following events are at the same time and the same place:"
       comments:
         add:
           title: "Leave a comment"
@@ -140,4 +155,30 @@ en:
       yahoo_maps:
         confirm: "Please note that Yahoo Maps is able to store your IP address and assign it with the URL of this page when accessing and viewing the maps."
         show: "Show Yahoo map"
-        
+
+
+
+    map:
+      title: "Map of current demonstrations"
+      contextmenu:
+        current: "List"
+        new: "New demo"
+      card:
+        hide: "Karte ausblenden"
+      openlayers_maps:
+        confirm: "Please note that OpenLayers is able to store your IP address and assign it with the URL of this page when accessing and viewing the maps."
+        show: "Show OpenLayers map"
+      google_maps:
+        confirm: "Please note that Google Maps is able to store your IP address and assign it with the URL of this page when accessing and viewing the maps."
+        show: "Show Goole map"
+      yahoo_maps:
+        confirm: "Please note that Yahoo Maps is able to store your IP address and assign it with the URL of this page when accessing and viewing the maps."
+        show: "Show Yahoo map"
+
+    list:
+      table: 
+        head:
+          time: "Date"
+          name: "Demo"
+          place: "Place"
+          distance: "Distance"

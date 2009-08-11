@@ -41,33 +41,40 @@ module EventsHelper
   end
 
   def index_with_year events 
-    result = []
-    events.reverse.each_with_index do |event, index|
-      if index == 0 || event.startdate.to_date.year != events[-index].startdate.to_date.year
-        result << event.startdate.to_date.year
-      end
-    end
-    result
+    events.map{|e| e.startdate.to_date.year}.uniq
   end
 
   def index_with_month events
-    result = []
-    events.each_with_index do |event, index|
-      if index == 0 || event.startdate.to_date.month != events[index-1].startdate.to_date.month
-        result << l(event.startdate.to_date,:format=>"%B" + ((event.startdate.to_date.year != Time.now.year) ? " %Y" : ""))
-      end
-    end
-    result
+    events.map{|e| l(e.startdate.to_date,:format=>"%B" + ((e.startdate.to_date.year != Time.now.year) ? " %Y" : ""))}.uniq
   end
   
   def index_with_literals organisations
+    organisations.map{|o| o.title.upcase.split(//).first}.uniq
+  end
+  
+  def type_image event
+    "type_demo.gif" if event.event_type_id == Event::DemoEvent
+  end
+  
+  def age_opacity time, max_hours
+    "opacity:#{'%.1f' % (1.0-(Time.now-time)/60/60/max_hours)}"
+  end 
+
+  def events_coordinates events
+    events.map{|e| e.coordinates}
+  end
+  
+  def events_bounds events
+    la =  events.map{|e| e.latitude}
+    lo = events.map{|e| e.longitude}
+    [[la.min, lo.min], [la.max, lo.max]]
+  end
+  
+  def events_markers events
     result = []
-    organisations.each_with_index do |organisation, index|
-      if index == 0 || organisation.title.upcase[0] != @organisations[index-1].title.upcase[0]
-        result << organisation.title.upcase.split(//).first.tr('äöü','ÄÖÜ')
-      end
+    events.each do |event|
+      result << Marker.new(event.coordinates,:label => event.title, :info_bubble => link_to("<b>" + event.title + "</b>",event_path(event)) + "<br><br>" + l(event.startdate) + "<br>" + h(event.city))
     end
     result
   end
-  
 end

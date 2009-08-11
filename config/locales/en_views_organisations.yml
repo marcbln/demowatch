@@ -52,7 +52,6 @@ en:
         back: "Back to list of promoters"
       button:
         submit: "Create"
-      warning: "<div class='red'>Please enter only the data from the promoter and <u>not</u> the actual demonstration!</div>"
 
 
 
@@ -70,3 +69,9 @@ en:
         title: "Description"
         info:
           title: "Further Information"
+      events:
+        title: "Demonstrations"
+        empty: "This organisation currently doesn't support any events."
+        table_title: "This organisation supports the following events:"
+
+          

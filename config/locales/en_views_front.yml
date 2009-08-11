@@ -16,12 +16,15 @@ en:
         text1: "Since the interests certainly are as individual as people themselves, you can prepare your personal repertoire of topics by yourself. You will be informend by e-mail automatically on new actions to these issues."
         text2: "If you would like to participate on a specific demonstration, you can simply subscribe at <i>Demowatch.eu</i>. This will take you right to the appointment and/or remind you about any news to this demonstration."
       section5: 
+        title: ""
+        text: ""
+      section6: 
         title: "Reliability" 
         text: "To submit a demonstration at <i>Demowatch.eu</i>, you must register. Because we wish to offer reliable information, we take care to provide useful content, and if possible, contact the promoter, where data incorrectly appears to be. Constitutionally disturbing content and clearly calls for violent protest actions will be removed from our database."
-      section6: 
-        title: "Anonymity"
-        text: "On the other hand we do not publish our visitors of any personal data. The user and visitor stays on <i>Demowatch.eu</i> completely anonymous. At the time he only leaves his e-mail address during registration so that the reminder service can work and the first digits of the zip code, so events in its vicinity can be found."
       section7: 
+        title: "Anonymity"
+        text: "On the other hand we do not publish our visitors of any personal data. The user and visitor stays on <i>Demowatch.eu</i> completely anonymous. At the time he only leaves his e-mail address during registration so that the reminder service can work and the first digits of the zip code, so events in its vicinity can be found. Demowatch is a certified <i>Wir speichern nicht</i> member."
+      section8: 
         title: "Our Maxim:"
         text: "Starting today the excuse 'If I had heard, I would have been!' is no longer valid! Stay tuned and remain democratically!"
 
@@ -130,16 +133,10 @@ en:
         unsubscribe: "Unsubscribe topic"
         subscribe: "Subscribe topic"
         whatis: "What means <i>{{tag}}</i>?"
-      demonstrations:
+      events:
         title: "Demonstrations"
         emtpy: "No demonstrations are currently listet to this topic."
-        table:
-          title: "The following demonstrations are known to this topic:"
-          head:
-            time: "Date"
-            name: "Action"
-            place: "Location"
-            distance: "Distance"
+        table_title: "The following demonstrations are known to this topic:"
       initiators:
         title: "Promoters"
         empty: "Currently there are no promoters listet which who are interested in this topic.."

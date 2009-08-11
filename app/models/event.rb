@@ -117,6 +117,37 @@ class Event < ActiveRecord::Base
   end
   
   
+  def coordinates
+    [ latitude, longitude ]
+  end
+  
+  def contras
+    Event.find(:all, :conditions => [ "(NOT id='" + String(id) + "') AND city LIKE '" + city + "' AND startdate >= '" + I18n.l(startdate - 4.hours,:format => "%Y-%m-%d %H:%M:%S") + "' AND startdate <= '" + I18n.l(startdate + 4.hours,:format => "%Y-%m-%d %H:%M:%S") + "'"])
+  end
+  
+  def changed_at
+    last = comments.map{|c| c.updated_at} << updated_at
+    last.max
+  end
+
+  # index types  
+  Yearly = 0
+  Monthly = 1
+
+  def self.chron_sections events, index_type=Yearly
+    result = []
+    events.each do |event| 
+      format =  index_type == Yearly ? '%Y' : "%B#{' %Y' if event.startdate.year != Time.now.year}"
+      section = I18n.l(event.startdate, :format => format)
+      if result.empty? || result.last.first != section
+        result << [section, [event]]
+      else
+        result.last.last << event
+      end
+    end
+    result
+  end
+  
 private
 
   def validate
