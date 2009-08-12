@@ -62,7 +62,7 @@ class EventsController < ApplicationController
   # GET /events/1.xml
   def show
     # 301 falls nicht die richtige url ...
-    # urls sind verschieden fuer versch. sprachen aber selben event
+    # urls sind verschieden fuer versch. sprachen aber den selben event
     if params[:id] != @event.to_param
       redirect_to event_url( @event), :status=>:moved_permanently
       return
@@ -132,7 +132,7 @@ class EventsController < ApplicationController
     @event.event_translations.each do |tr|
       @languages.push tr.locale
     end
-    @current_language = @languages.first
+    @current_language_tab = @languages.first
   end
 
   # POST /events
@@ -164,11 +164,11 @@ class EventsController < ApplicationController
         format.html { redirect_to(@event) }
         format.xml  { head :ok }
       else
-    @languages = []
-    @event.event_translations.each do |tr|
-      @languages.push tr.locale
-    end
-@current_language = params[:current_language]
+@languages = []
+@event.event_translations.each do |tr|
+  @languages.push tr.locale
+end
+        @current_language_tab = params[:current_language_tab]
         @organisations = Organisation.find(:all, :order => 'title')
         format.html { render :action => "edit" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }

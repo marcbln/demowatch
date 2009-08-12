@@ -22,6 +22,10 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
+  # only for localhost-testing
+  map.switch_lang '/switch_language/:language', :controller => 'languages', :action => 'switch'
+
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

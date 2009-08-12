@@ -2,13 +2,16 @@
 %div{ :class=>'lightbox-modal', :style=>'overflow-x:hidden; overflow-y:auto'}
   %div{ :style=>'float:right' }
     = link_to_close_lightbox image_tag("lightbox_close.gif", :border=> 0, :style=>'margin:5px;')
+  %div
+    Wählen Sie eine Sprache, die Sie hinzufügen möchten
   %p
     - I18N_ALL_LANGUAGES.each do |lang|
-      = link_to_function image_tag( 'flags/'+lang+'.gif', :alt=>lang) do |page|
-        - page.insert_html :bottom, 'translation_language_tabs', render( :partial=>'translation_language_tab', :locals=>{:css_class=>'tab_inactive', :lang=>lang})
-        - translation = EventTranslation.new
-        - translation.locale = lang
-        - page.insert_html :bottom, :translations_container, render( :partial => 'translation', :object=>translation, :locals => {:css_style => 'display:none'})
-        i18n_active_languages.push( '#{lang}');
-        switch_language_tab( '#{lang}');
-        Lightbox.hideBox();
+      %div{ :id => "modal_language_select_#{lang}"}
+        = link_to_function image_tag( 'flags/'+lang+'.gif', :alt=>lang) do |page|
+          - page.insert_html :bottom, 'translation_language_tabs', render( :partial=>'translation_language_tab', :locals=>{:css_class=>'tab_inactive', :lang=>lang})
+          - translation = EventTranslation.new
+          - translation.locale = lang
+          - page.insert_html :bottom, :translations_container, render( :partial => 'translation', :object=>translation, :locals => {:css_style => 'display:none'})
+          i18n_active_languages.push( '#{lang}');
+          switch_language_tab( '#{lang}');
+          Lightbox.hideBox();

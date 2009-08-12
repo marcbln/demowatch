@@ -23,9 +23,19 @@ function switch_language_tab( language) {
             }
         }
     })
+
+    $('current_language_tab').value = language;
 }
 
 
 function add_language_tab_menu() {
+    i18n_all_languages.each( function(s, index) {
+      if( i18n_active_languages.indexOf( s) < 0) {
+        $("modal_language_select_"+s).show();
+      }
+      else {
+        $("modal_language_select_"+s).hide();
+      }
+    });
     Lightbox.showBoxByID('language_select_modal_dialog', 500, 300);
 }

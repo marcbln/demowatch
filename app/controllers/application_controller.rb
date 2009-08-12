@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.default_locale = 'en' # default fallback
-    if request.host.include?('localhost') 
-      I18n.locale = 'de'
+    if request.host.include?('localhost') # local werden cookies verwendet
+      I18n.locale = cookies[:language] ? cookies[:language] : 'de'
     else
       #logger.debug "* Accept-Language: #{request.env['HTTP_ACCEPT_LANGUAGE']}"
       if request.host.match( /^www\.demowatch\.de/i) 

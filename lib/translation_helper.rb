@@ -15,7 +15,7 @@ module TranslationHelper
         return tr[column]
       end
     end
-    return '--------------------' # no translation found
+    return '' # no translation found
   end
 
 end

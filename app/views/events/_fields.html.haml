@@ -30,7 +30,7 @@
 
 
 -#
--# die tabs
+-# die translation tabs
 -#
 %div{ :class => 'tabbed_languages'}
   %div{ :class=>'tabs' }
@@ -38,7 +38,7 @@
       Sprache wählen:
     %div{ :id=>'translation_language_tabs' }
       - @languages.each do |lang|
-        - css_class = lang==@current_language ? 'tab_active' : 'tab_inactive'
+        - css_class = lang==@current_language_tab ? 'tab_active' : 'tab_inactive'
         = render :partial=>'translation_language_tab', :locals=>{:lang=>lang, :css_class=>css_class}
     %div{ :class=>'tab_inactive', :onClick=>'add_language_tab_menu()', :title=>'Sprache hinzufuegen' }
       = image_tag( 'plus.gif', :alt=>'Sprache hinzufuegen')
@@ -58,9 +58,13 @@
   -#
   %div{ :id=>:translations_container }
     - @event.event_translations.each do |translation|
-      - css_style = translation.locale.to_s == @current_language ? '' : 'display:none'
+      - css_style = translation.locale.to_s == @current_language_tab ? '' : 'display:none'
       = render :partial => 'translation', :object=>translation, :locals => {:css_style => css_style}
-  
+
+-# this one is for remembering the selected tab in case of an validation error
+%input{ :type=>'hidden', :id=>:current_language_tab, :name=>:current_language_tab, :value =>@current_language_tab }
+
+ 
 -#
 -# TINYMCE
 -#
