@@ -1,7 +1,7 @@
 -# sprachauswahl, wenn neue sprache hinzugefuegt werden soll
 %div{ :class=>'lightbox-modal', :style=>'overflow-x:hidden; overflow-y:auto'}
   %div{ :style=>'float:right' }
-    = link_to_close_lightbox image_tag("lightbox_close.gif", :border=> 0, :style=>'margin:5px;')
+    = link_to_close_lightbox image_tag("close.gif", :border=> 0, :style=>'margin:5px;')
   %div
     Wählen Sie eine Sprache, die Sie hinzufügen möchten
   %p
@@ -14,4 +14,5 @@
           - page.insert_html :bottom, :translations_container, render( :partial => 'translation', :object=>translation, :locals => {:css_style => 'display:none'})
           i18n_active_languages.push( '#{lang}');
           switch_language_tab( '#{lang}');
+          check_add_language_button();
           Lightbox.hideBox();

@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
     end
     #logger.debug "* Locale set to '#{I18n.locale}'"
   end
+
   def redirect_to_www_demowatch_de
     if !request.host.include?('localhost') 
       if request.host.match( /^www\.demowatch\.de/i).nil? && request.host.match( /^www\.demowatch\.eu/i).nil?

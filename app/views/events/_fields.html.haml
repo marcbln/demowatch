@@ -29,6 +29,17 @@
 %h2= t(".title")
 
 
+
+
+
+-# die tags sind erstmal noch nicht multilang
+%p= t(".name.theme_hint")
+%p
+  = f.label :tag_list, t(".name.field.themes")
+  = f.text_field :tag_list, :size=>60, :autocomplete => "off"
+  #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
+
+
 -#
 -# die translation tabs
 -#
@@ -40,26 +51,19 @@
       - @languages.each do |lang|
         - css_class = lang==@current_language_tab ? 'tab_active' : 'tab_inactive'
         = render :partial=>'translation_language_tab', :locals=>{:lang=>lang, :css_class=>css_class}
-    %div{ :class=>'tab_inactive', :onClick=>'add_language_tab_menu()', :title=>'Sprache hinzufuegen' }
+    %div{ :class=>'tab_inactive', :onClick=>'add_language_tab_menu()', :title=>'Sprache hinzufuegen', :id=>'add_language_button' }
       = image_tag( 'plus.gif', :alt=>'Sprache hinzufuegen')
   
-  
-  
   %div{ :class=>'content' }
-
-    %p
-      = f.label :tag_list, t(".name.field.themes")
-      = f.text_field :tag_list, :size=>60, :autocomplete => "off"
-      #event_tag_list_auto_complete.auto_complete{:style=>'display:none'}
-    %p= t(".name.theme_hint")
-
   -#
   -# die inhalts-container (translations)
   -#
   %div{ :id=>:translations_container }
     - @event.event_translations.each do |translation|
-      - css_style = translation.locale.to_s == @current_language_tab ? '' : 'display:none'
+      - css_style = translation.locale == @current_language_tab ? '' : 'display:none'
       = render :partial => 'translation', :object=>translation, :locals => {:css_style => css_style}
+
+
 
 -# this one is for remembering the selected tab in case of an validation error
 %input{ :type=>'hidden', :id=>:current_language_tab, :name=>:current_language_tab, :value =>@current_language_tab }

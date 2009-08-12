@@ -22,11 +22,13 @@ class Event < ActiveRecord::Base
   belongs_to :organisation
   belongs_to :user
 
-  has_many :event_translations
+  has_many :event_translations, :order => 'locale ASC'
+
   after_update :save_translations
   validates_associated :event_translations, :message=>'^Sie müssen für jede Sprache einen Titel angeben'
 #  translates :title, :description, :location
 #  accepts_nested_attributes_for :event_translations
+
 
   DemoEvent = 0
   PicketEvent = 1
@@ -77,10 +79,29 @@ class Event < ActiveRecord::Base
 
   # virtual attribute setter
   def existing_translation_attributes=( translation_attributes)
-    translation_attributes.each do |tr_id,tr_attributes|
-      tr = event_translations.detect { |t| t.id == tr_id.to_i  }
-      tr.attributes = tr_attributes
-    end
+
+puts "/////////////////////////////////////////////"
+p event_translations.reject(&:new_record?).inspect
+puts "/////////////////////////////////////////////"
+
+event_translations.reject(&:new_record?).each do |translation|
+
+p translation.inspect
+puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+  tr_attributes = translation_attributes[translation.id.to_s]
+  if tr_attributes
+    translation.attributes = tr_attributes
+  else
+    event_translations.delete(translation)
+puts "delete #{translation.id}"
+puts "================================================="
+  end
+end
+
+#    translation_attributes.each do |tr_id,tr_attributes|
+#      tr = event_translations.detect { |t| t.id == tr_id.to_i  }
+#      tr.attributes = tr_attributes
+#    end
   end
   # virtual attribute setter
   def new_translation_attributes=( translation_attributes)
@@ -159,8 +180,22 @@ private
     errors.add(:address, I18n.t("activerecord.errors.messages.google_not_found")) if !geo.success
     self.address,self.city,self.latitude,self.longitude = geo.full_address,geo.city,geo.lat,geo.lng if geo.success
 
-#    puts( geo.state + '##################');
-  end
+    # nur bekannte locale-codes
+    event_translations.each do |tr|
+      if( !I18N_ALL_LANGUAGES.include?( tr.locale))
+        errors.add( :event_translations, '^Unbekannter Locale-Code: ' + tr.locale);
+      end
+    end
+    # mindestens eine übersetzung
+    if event_translations.length <= 0
+  		errors.add(:event_translations, "^Es werden Angaben in mindestens einer Sprache benötigt")
+    end
+    # jede sprache maximal einmal (sollte nur bei manipulationsversuchen greifen)
+    languages = TranslationHelper.get_languages(event_translations)
+    if languages.length != languages.uniq.length
+      errors.add( :event_translations, '^Es gibt Sprachen doppelt')
+    end
 
+  end
 
 end

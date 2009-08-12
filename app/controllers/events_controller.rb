@@ -112,10 +112,10 @@ class EventsController < ApplicationController
   # GET /events/new.xml
   def new
     @event = Event.new(:startdate => Time.now, :event_type_id => Event::DemoEvent)
+    @event.event_translations.push( EventTranslation.new( :locale=>I18n.locale))
     @organisations = Organisation.find(:all, :order => 'title')
-# two letter codes
-@languages = I18N_ALL_LANGUAGES
-
+    @languages = TranslationHelper.get_languages( @event.event_translations)
+    @current_language_tab = @languages.first
     
     respond_to do |format|
       format.html # new.html.erb
@@ -127,11 +127,7 @@ class EventsController < ApplicationController
   def edit
     @organisations = Organisation.find(:all, :order => 'title')
     @event.event_translations.collect
-    
-    @languages = []
-    @event.event_translations.each do |tr|
-      @languages.push tr.locale
-    end
+    @languages = TranslationHelper.get_languages( @event.event_translations)
     @current_language_tab = @languages.first
   end
 
@@ -147,8 +143,8 @@ class EventsController < ApplicationController
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         @organisations = Organisation.find(:all, :order => 'title')
-# two letter codes
-@languages = I18N_ALL_LANGUAGES         
+        @current_language_tab = params[:current_language_tab]
+        @languages = TranslationHelper.get_languages( @event.event_translations)
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
@@ -158,16 +154,14 @@ class EventsController < ApplicationController
   # PUT /events/1
   # PUT /events/1.xml
   def update
+    params[:event][:existing_translation_attributes] ||= {}
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = t("events.flash.update.success")
         format.html { redirect_to(@event) }
         format.xml  { head :ok }
       else
-@languages = []
-@event.event_translations.each do |tr|
-  @languages.push tr.locale
-end
+        @languages = TranslationHelper.get_languages( @event.event_translations)
         @current_language_tab = params[:current_language_tab]
         @organisations = Organisation.find(:all, :order => 'title')
         format.html { render :action => "edit" }

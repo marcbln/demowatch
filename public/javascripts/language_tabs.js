@@ -39,3 +39,20 @@ function add_language_tab_menu() {
     });
     Lightbox.showBoxByID('language_select_modal_dialog', 500, 300);
 }
+
+function remove_language_tab( lang) {
+  $('language_tab_' + lang).remove();
+  $('translation_container_' + lang).remove();
+  i18n_active_languages = i18n_active_languages.without( lang);
+  switch_language_tab( i18n_active_languages[0]);
+  check_add_language_button();
+}
+
+function check_add_language_button() {
+  if( i18n_active_languages.length >= i18n_all_languages.length) {
+    $('add_language_button').hide();
+  }
+  else {
+    $('add_language_button').show();
+  }
+}
