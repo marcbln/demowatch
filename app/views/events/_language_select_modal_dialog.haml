@@ -1,34 +1,38 @@
 -# sprachauswahl, wenn neue sprache hinzugefuegt werden soll
-%div{ :class=>'lightbox-modal', :style=>'overflow-x:hidden; overflow-y:auto'}
-  %div{ :style=>'float:right' }
-    = link_to_close_lightbox image_tag("close.gif", :border=> 0, :style=>'margin:5px;')
-  %div
-    Wählen Sie eine Sprache, die Sie hinzufügen möchten
-  %p
-    - I18N_ALL_LANGUAGES.each do |lang|
-      %div{ :id => "modal_language_select_#{lang}"}
-        = link_to_function image_tag( 'flags/'+lang+'.gif', :alt=>lang) do |page|
-          - page.insert_html :bottom, 'translation_language_tabs', render( :partial=>'translation_language_tab', :locals=>{:css_class=>'tab_inactive', :lang=>lang})
-          - translation = EventTranslation.new
-          - translation.locale = lang
-          - page.insert_html :bottom, :translations_container, render( :partial => 'translation', :object=>translation, :locals => {:css_style => 'display:none'})
-          i18n_active_languages.push( '#{lang}');
-          switch_language_tab( '#{lang}');
-          check_add_language_button();
-          Lightbox.hideBox();
+%div{ :style=>'text-align:center' }
+  %div{ :class=>'lightbox-modal', :style=>'overflow-x:hidden; overflow-y:auto; margin:0 auto;'}
+    %div{ :style=>'float:right' }
+      = link_to_close_lightbox image_tag("close.gif", :border=> 0, :style=>'margin:5px;')
+    %h4
+      Wählen Sie eine Sprache, die Sie hinzufügen möchten
+    %p
+      - I18N_ALL_LANGUAGES.each do |lang|
+        %div{ :id => "modal_language_select_#{lang}"}
+          = link_to_function image_tag( 'flags/'+lang+'.gif', :alt=>lang, :style=>'margin-bottom:12px') do |page|
+            - page.insert_html :bottom, 'translation_language_tabs', render( :partial=>'translation_language_tab', :locals=>{:css_class=>'tab_inactive', :lang=>lang})
+            - translation = EventTranslation.new
+            - translation.locale = lang
+            - page.insert_html :bottom, :translations_container, render( :partial => 'translation', :object=>translation, :locals => {:css_style => 'display:none'})
+            i18n_active_languages.push( '#{lang}');
+            switch_language_tab( '#{lang}');
+            check_add_language_button();
+            Lightbox.hideBox();
 
 
-          tinyMCE.init({
-          mode : "textareas",
-          theme : "advanced",
-          theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
-          theme_advanced_buttons2 : "",
-          theme_advanced_buttons3 : "",
-          theme_advanced_toolbar_location : "top",
-          theme_advanced_toolbar_align : "left",
-          theme_advanced_statusbar_location : "bottom",
-          content_css : "/stylesheets/tinymce.css",
-          width : "500",
-          height: "300",
-          language : "en"
-          });
+            tinyMCE.init({
+            mode : "textareas",
+            theme : "advanced",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,|,undo,redo,|,link,unlink,|,hr",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_statusbar_location : "bottom",
+            content_css : "/stylesheets/tinymce.css",
+            width : "500",
+            height: "300",
+            language : "en"
+            });
+          %br{ :clear=>'all'}
+    %br
+    %br
