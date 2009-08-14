@@ -58,18 +58,14 @@ class ApplicationController < ActionController::Base
     # www.demowatch.de / demowatch.de
     if !@rh.match( /demowatch\.de$/i).nil?
       _301_to_domain 'de.demowatch.org'
-    # demowatch.eu / demowatch.org
-    else if( !@rh.match( /^demowatch\.eu$/i).nil? || !@rh.match( /^demowatch\.org$/i).nil?)
-      locale = get_locale_from_http_header
-      _301_to_domain "#{locale}.demowatch.org"
-    # www.demowatch.eu, en.demowatch.eu, de.demowatch.eu, ...
-    else if !@rh.match( /.+\.demowatch\.eu$/i).nil?
+    else if !@rh.match( /.+\.demowatch\.eu$/i).nil? ||  !@rh.match( /.+\.demowatch\.net$/i).nil?
       locale = get_locale_from_subdomain
       if locale.nil?
         _301_to_domain( get_locale_from_http_header + '.demowatch.org')
       else
         _301_to_domain( locale + '.demowatch.org')
       end
+    # so sollen die domains aussehen:
     # www.demowatch.org, en.demowatch.org, de.demowatch.org, ...
     else if !@rh.match( /.+\.demowatch\.org$/i).nil?
       locale = get_locale_from_subdomain
@@ -81,20 +77,12 @@ class ApplicationController < ActionController::Base
         p "=== locale: #{I18n.locale} ==="
       end
     else
-      p "unknown host #{@rh} !!!!!!!!!!"
+      # demowatch.eu, demowatch.org, demowatch.net + unbekannte
+      _301_to_domain( get_locale_from_http_header + '.demowatch.org')
     end
     end
     end
-    end
-
-#      && request.host.match( /^www\.demowatch\.eu/i).nil?
-#      matches = request.host.match(/.*\.([a-z]+)$/i)
-#      if matches.nil?
-#        redirect_to "http://www.demowatch.eu" + request.path, :status=>:moved_permanently
-#      end
-#      redirect_to "http://www.demowatch." + matches[1] + request.path, :status=>:moved_permanently
-#
-end
+  end
 
 
   def save_count
@@ -136,7 +124,7 @@ private
 
   def _301_to_domain( new_domain)
     p "#{@rh} -> #{new_domain}"
-#    redirect_to 'http://' + new_domain + request.path, :status=>:moved_permanently
+    redirect_to 'http://' + new_domain + request.path, :status=>:moved_permanently
   end
 
 end
