@@ -9,8 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20090805202017) do
+ActiveRecord::Schema.define(:version => 20090816125446) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "title",                   :limit => 50, :default => ""
@@ -39,6 +38,15 @@ ActiveRecord::Schema.define(:version => 20090805202017) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "demowatch_bak", :force => true do |t|
+    t.string "zip",       :limit => 5
+    t.string "name"
+    t.float  "latitude"
+    t.float  "longitude"
+  end
+
+  add_index "demowatch_bak", ["zip"], :name => "index_zips_on_zip", :unique => true
+
   create_table "event_translations", :force => true do |t|
     t.string   "locale",      :limit => 2
     t.integer  "event_id"
@@ -50,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20090805202017) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "organisation_id",                     :null => false
+    t.integer  "organisation_id",                         :null => false
     t.text     "title"
     t.text     "description"
     t.datetime "startdate"
@@ -91,6 +99,14 @@ ActiveRecord::Schema.define(:version => 20090805202017) do
     t.string  "url"
     t.integer "count"
     t.date    "date"
+  end
+
+  create_table "tag_translations", :force => true do |t|
+    t.string   "locale",     :limit => 2
+    t.integer  "tag_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", :force => true do |t|
