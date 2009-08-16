@@ -1,6 +1,6 @@
 # all possible locales, wird fuer sprachauswahl und default-fallback-reihenfolge verwendet
 I18N_ALL_LANGUAGES = %w{de en es fr} # alphabetical order
-
+DEFAULT_LANGUAGE = 'en'
 
 
 module TranslationHelper

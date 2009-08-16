@@ -11,7 +11,7 @@ class EventTranslations < ActiveRecord::Migration
     
     events = Event.find :all
     events.each do |e|
-      EventTranslation.create (
+      EventTranslation.create(
         :event=> e,  
         :locale => 'de', 
         :title => e[:title], 

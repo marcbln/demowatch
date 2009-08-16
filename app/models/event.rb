@@ -126,18 +126,6 @@ end
     return TranslationHelper.get_translation( event_translations, :location)
   end
 
-# returns all languages for which translations exist
-# .... unused...
-  def languages
-    translations = EventTranslation.find(:all, :conditions=> "event_id='#{self.id}'", :order => 'locale ASC')
-    langs = []
-    translations.each do |t|
-      langs.push t.locale.to_s
-    end
-    return langs
-  end
-  
-  
   def coordinates
     [ latitude, longitude ]
   end

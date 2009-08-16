@@ -45,7 +45,6 @@ doc\:plugins\:acts_as_commentable=Generate documentation for the acts_as_comment
 doc\:plugins\:acts_as_paranoid=Generate documentation for the acts_as_paranoid plugin
 doc\:plugins\:acts_as_state_machine=Generate documentation for the acts_as_state_machine plugin
 doc\:plugins\:acts_as_taggable_on_steroids=Generate documentation for the acts_as_taggable_on_steroids plugin
-doc\:plugins\:acts_as_taggable_with_aliases=Generate documentation for the acts_as_taggable_with_aliases plugin
 doc\:plugins\:auto_complete=Generate documentation for the auto_complete plugin
 doc\:plugins\:base_auth=Generate documentation for the base_auth plugin
 doc\:plugins\:daemon_generator=Generate documentation for the daemon_generator plugin

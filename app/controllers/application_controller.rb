@@ -1,11 +1,7 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
-
-# todo ... die aus dem helper benutzen
-I18N_ALL_LANGUAGES = %w{de en es fr} # alphabetical order
-DEFAULT_LANGUAGE = 'en'
-
+include TranslationHelper
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
@@ -46,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_demowatch_org_or_set_locale
     @rh = request.host
-#    @rh = 'de.demowatch.org'
+#    @rh = 'en.demowatch.org' ## testing...
 
     # LOCALHOST
     if @rh.include?('localhost')
@@ -124,7 +120,9 @@ private
 
   def _301_to_domain( new_domain)
     p "#{@rh} -> #{new_domain}"
-    redirect_to 'http://' + new_domain + request.path, :status=>:moved_permanently
+    if !@rh.include?('localhost')
+      redirect_to 'http://' + new_domain + request.path, :status=>:moved_permanently
+    end
   end
 
 end

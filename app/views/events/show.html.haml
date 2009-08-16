@@ -34,7 +34,7 @@
         = link_to t(".contextmenu.delete"), @event, :confirm => t(".confirm.delete"), :method => :delete
   
 %h2= t(".themes.title")
-%p= @event.tags.map{|tag| link_to h( tag.name), :controller=>:tag, :action=>tag.name}.join(', ')
+%p= @event.tags.map{|tag| link_to h( tag.name_t), :controller=>:tag, :action=>tag.name}.join(', ')
 
 %h2= t(".venue.title")
 - if @event.canceled

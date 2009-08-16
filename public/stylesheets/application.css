@@ -519,3 +519,9 @@ hr  {
   margin-bottom: 5px;
   font-style: italic;
 }
+
+#language_selection {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
